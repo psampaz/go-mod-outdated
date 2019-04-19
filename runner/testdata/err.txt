@@ -1,0 +1,6 @@
+{
+	"Path": "github.com/gohugoio/hugo",
+	"Main": true,
+	"Dir": "/home/mojo/Code/go/hugo",
+	"GoMod": "/home/mojo/Code/go/hugo/go.mod"
+

@@ -30,7 +30,7 @@ var mods = []mod.Module{
 		Main:     false,
 		Version:  "v1.0.0",
 		Indirect: false,
-		Update: mod.Update{
+		Update: &mod.Module{
 			Version: "v1.1.0",
 		},
 	},
@@ -39,7 +39,7 @@ var mods = []mod.Module{
 		Main:     false,
 		Version:  "v1.0.0",
 		Indirect: true,
-		Update: mod.Update{
+		Update: &mod.Module{
 			Version: "v1.1.0",
 		},
 	},
@@ -64,7 +64,7 @@ func TestFilterModules(t *testing.T) {
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: false,
-			Update: mod.Update{
+			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
 		},
@@ -73,7 +73,7 @@ func TestFilterModules(t *testing.T) {
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: true,
-			Update: mod.Update{
+			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
 		},
@@ -91,7 +91,7 @@ func TestFilterModulesHasUpdate(t *testing.T) {
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: false,
-			Update: mod.Update{
+			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
 		},
@@ -100,7 +100,7 @@ func TestFilterModulesHasUpdate(t *testing.T) {
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: true,
-			Update: mod.Update{
+			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
 		},
@@ -124,7 +124,7 @@ func TestFilterModulesIsDirect(t *testing.T) {
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: false,
-			Update: mod.Update{
+			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
 		},
@@ -142,7 +142,7 @@ func TestFilterModulesHasUpdateIsDirect(t *testing.T) {
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: false,
-			Update: mod.Update{
+			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
 		},

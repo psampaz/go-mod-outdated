@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/psampaz/go-mod-outdated/runner"
+	"github.com/psampaz/go-mod-outdated/internal/runner"
 )
 
 func main() {

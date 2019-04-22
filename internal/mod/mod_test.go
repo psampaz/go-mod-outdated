@@ -1,11 +1,10 @@
 package mod_test
 
 import (
+	"github.com/psampaz/go-mod-outdated/internal/mod"
 	"reflect"
 	"testing"
 	"time"
-
-	"github.com/psampaz/go-mod-outdated/mod"
 )
 
 var mods = []mod.Module{

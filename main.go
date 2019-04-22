@@ -2,10 +2,9 @@ package main
 
 import (
 	"flag"
+	"github.com/psampaz/go-mod-outdated/internal/runner"
 	"log"
 	"os"
-
-	"github.com/psampaz/go-mod-outdated/runner"
 )
 
 func main() {

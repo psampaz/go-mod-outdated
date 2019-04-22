@@ -118,9 +118,6 @@ modules, expect things to break.
 to indicate breaking changes, but still everything relies on each module developer to apply correct version tags. Unless
 there is a fully automated way to detect breaking changes in a codebase, a good practice to avoid surpises is to write 
 tests and avoid dependencies on modules not well maintained and documented.
-- The purpose of this tool is to provide an easy visual overview of the available module updates of an application. 
-Please do not import any packages in your code. This is not a library, and most things will be marked as internal
-in the future.
 
 ## Real Example
 

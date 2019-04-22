@@ -2,11 +2,11 @@ package runner
 
 import (
 	"encoding/json"
+	"github.com/psampaz/go-mod-outdated/internal/mod"
 	"io"
 	"strconv"
 
 	"github.com/olekukonko/tablewriter"
-	"github.com/psampaz/go-mod-outdated/mod"
 )
 
 // Run converts the the json output of go list -u -m -json all to table format

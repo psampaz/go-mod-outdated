@@ -1,8 +1,9 @@
-package runner
+package runner_test
 
 import (
 	"bytes"
 	"errors"
+	"github.com/psampaz/go-mod-outdated/internal/runner"
 	"io/ioutil"
 	"testing"
 )
@@ -17,7 +18,7 @@ func TestRun(t *testing.T) {
 	outBytes, _ := ioutil.ReadFile("testdata/out.txt")
 	wantOut := bytes.NewBuffer(outBytes)
 
-	err := Run(in, &gotOut, false, false)
+	err := runner.Run(in, &gotOut, false, false)
 
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err.Error())
@@ -36,7 +37,7 @@ func TestRunWithError(t *testing.T) {
 	inBytes, _ := ioutil.ReadFile("testdata/err.txt")
 	in := bytes.NewBuffer(inBytes)
 
-	gotErr := Run(in, &out, false, false)
+	gotErr := runner.Run(in, &out, false, false)
 	wantErr := errors.New("unexpected EOF")
 
 	if gotErr.Error() != wantErr.Error() {

@@ -194,6 +194,21 @@ func TestModule_InvalidTimestamp(t *testing.T) {
 			Time:     modTime("2018-01-01T00:00:00Z"),
 			Indirect: false,
 		}, false, "No update"},
+		{mod.Module{
+			Path:    "github.com/pk4/pk4",
+			Main:    false,
+			Version: "v1.0.0",
+			Replace: &mod.Module{
+				Version: "v1.0.0",
+				Time:    modTime("2018-01-01T00:00:00Z"),
+				Update: &mod.Module{
+					Version: "v1.1.0",
+					Time:    modTime("2017-01-01T00:00:00Z"),
+				},
+			},
+			Update:   nil,
+			Indirect: false,
+		}, true, "Current version newer that latest version in Replace"},
 	}
 
 	for k := range tests {
@@ -258,7 +273,12 @@ func TestModule_NewVersion(t *testing.T) {
 			Update: &mod.Module{
 				Version: "v1.1.0",
 			},
-		}, "v0.0.2", "New version with replace"}}
+		}, "v0.0.2", "New version with replace"},
+		{mod.Module{
+			Version: "v1.0.0",
+			Update:  nil,
+		}, "", "No update"},
+	}
 
 	for k := range tests {
 		test := tests[k]

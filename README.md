@@ -74,6 +74,25 @@ If you want to see only the direct depedencies that have updates run
 go list -u -m -json all | go-mod-outdated -update -direct
 ```
 
+## Invalid timestamps
+
+There is case where the updated version reported by the go list command is actually older than the current one.  
+ 
+go-mod-outdated output includes a column named **VALID TIMESTAMP** which will give an indication when this case happens,
+helping application maintainers to avoid upgrading to a version that will break their application. 
+
+## Important notes
+
+- Go's module system will be finilized in Go 1.13 version. Since this tool relies on the output of Go's list related to 
+modules, expect things to break.
+- Upgrading an application is a responsibility of the maintainer of the application. Semantic versioning provides a way
+to indicate breaking changes, but still everything relies on each module developer to apply correct version tags. Unless
+there is a fully automated way to detect breaking changes in a codebase, a good practice to avoid surpises is to write 
+tests and avoid dependencies on modules not well maintained and documented.
+- The purpose of this tool is to provide an easy visual overview of the available module updates of an application. 
+Please do not import any packages in your code. This is not a library, and most things will be marked as internal
+in the future.
+ 
 ## Real Example
 
 The following example is based on Hugo's go.mod (v0.53) (https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod)

@@ -3,9 +3,10 @@ package runner_test
 import (
 	"bytes"
 	"errors"
-	"github.com/psampaz/go-mod-outdated/internal/runner"
 	"io/ioutil"
 	"testing"
+
+	"github.com/psampaz/go-mod-outdated/internal/runner"
 )
 
 func TestRun(t *testing.T) {

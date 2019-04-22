@@ -1,10 +1,11 @@
 package mod_test
 
 import (
-	"github.com/psampaz/go-mod-outdated/internal/mod"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/psampaz/go-mod-outdated/internal/mod"
 )
 
 var mods = []mod.Module{
@@ -195,11 +196,12 @@ func TestModule_InvalidTimestamp(t *testing.T) {
 		}, false, "No update"},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			i := tt.module.InvalidTimestamp()
-			if i != tt.invalidTimestamp {
-				t.Errorf("got %v, want %v", i, tt.invalidTimestamp)
+	for k := range tests {
+		test := tests[k]
+		t.Run(test.description, func(t *testing.T) {
+			i := test.module.InvalidTimestamp()
+			if i != test.invalidTimestamp {
+				t.Errorf("got %v, want %v", i, test.invalidTimestamp)
 			}
 		})
 	}
@@ -222,11 +224,12 @@ func TestModule_CurrentVersion(t *testing.T) {
 			Version: "v1.0.0",
 		}, "v0.0.1", "Current version with replace"}}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			i := tt.module.CurrentVersion()
-			if i != tt.version {
-				t.Errorf("got %v, want %v", i, tt.version)
+	for k := range tests {
+		test := tests[k]
+		t.Run(test.description, func(t *testing.T) {
+			i := test.module.CurrentVersion()
+			if i != test.version {
+				t.Errorf("got %v, want %v", i, test.version)
 			}
 		})
 	}
@@ -257,11 +260,12 @@ func TestModule_NewVersion(t *testing.T) {
 			},
 		}, "v0.0.2", "New version with replace"}}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			i := tt.module.NewVersion()
-			if i != tt.version {
-				t.Errorf("got %v, want %v", i, tt.version)
+	for k := range tests {
+		test := tests[k]
+		t.Run(test.description, func(t *testing.T) {
+			i := test.module.NewVersion()
+			if i != test.version {
+				t.Errorf("got %v, want %v", i, test.version)
 			}
 		})
 	}
@@ -293,11 +297,12 @@ func TestModule_HasNewVersion(t *testing.T) {
 		}, false, "No new version with replace"},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.description, func(t *testing.T) {
-			i := tt.module.HasUpdate()
-			if i != tt.hasUpdate {
-				t.Errorf("got %v, want %v", i, tt.hasUpdate)
+	for k := range tests {
+		test := tests[k]
+		t.Run(test.description, func(t *testing.T) {
+			i := test.module.HasUpdate()
+			if i != test.hasUpdate {
+				t.Errorf("got %v, want %v", i, test.hasUpdate)
 			}
 		})
 	}

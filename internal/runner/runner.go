@@ -2,9 +2,10 @@ package runner
 
 import (
 	"encoding/json"
-	"github.com/psampaz/go-mod-outdated/internal/mod"
 	"io"
 	"strconv"
+
+	"github.com/psampaz/go-mod-outdated/internal/mod"
 
 	"github.com/olekukonko/tablewriter"
 )
@@ -33,7 +34,13 @@ func renderTable(writer io.Writer, modules []mod.Module) {
 	table := tablewriter.NewWriter(writer)
 	table.SetHeader([]string{"Module", "Version", "New Version", "Direct", "Valid Timestamps"})
 	for k := range modules {
-		table.Append([]string{modules[k].Path, modules[k].CurrentVersion(), modules[k].NewVersion(), strconv.FormatBool(!modules[k].Indirect), strconv.FormatBool(!modules[k].InvalidTimestamp())})
+		table.Append([]string{
+			modules[k].Path,
+			modules[k].CurrentVersion(),
+			modules[k].NewVersion(),
+			strconv.FormatBool(!modules[k].Indirect),
+			strconv.FormatBool(!modules[k].InvalidTimestamp()),
+		})
 	}
 	table.Render()
 }

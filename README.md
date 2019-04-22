@@ -71,8 +71,37 @@ go list -u -m -json all | go-mod-outdated -direct
 If you want to see only the direct depedencies that have updates run
 
 ```
-go list -u -m -json all | go-mod-outdated -update -direct
+go list -u -m -json all | go-mod-outdated -update -direct 
 ```
+
+### Help
+  
+In order to see details about the usage of the command use the **-h** or **-help** flag
+
+```
+$ go-mod-outdated -help
+
+Usage of go-mod-outdated:
+  -direct
+        List only direct modules
+  -update
+        List only modules with updates
+```
+
+### Shortcut
+
+If **go list -u -m -json all | go-mod-outdated -update -direct** seems too difficult to use or remember you can create 
+a shortcut using an alias. In linux try one of the following: 
+
+```
+alias gmo="go list -u -m -json all | go-mod-outdated"
+
+alias gmod="go list -u -m -json all | go-mod-outdated -direct"
+
+alias gmou="go list -u -m -json all | go-mod-outdated -update"
+
+alias gmodu="go list -u -m -json all | go-mod-outdated -direct -update"
+```  
 
 ## Real Example
 

@@ -90,7 +90,7 @@ Usage of go-mod-outdated:
 
 ### Shortcut
 
-If **go list -u -m -json all | go-mod-outdated -update -direct** seems to difficult to use or remember you can create 
+If **go list -u -m -json all | go-mod-outdated -update -direct** seems too difficult to use or remember you can create 
 a shortcut using an alias. In linux try one of the following: 
 
 ```

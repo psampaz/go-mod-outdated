@@ -1,9 +1,10 @@
 package mod
 
-import "time"
+import (
+	"time"
+)
 
 // Module holds information about a specifc module listed by go list
-
 type Module struct {
 	Path      string       `json:",omitempty"` // module path
 	Version   string       `json:",omitempty"` // module version
@@ -21,6 +22,63 @@ type Module struct {
 
 type ModuleError struct {
 	Err string // error text
+}
+
+// InvalidTimestamp checks if the version reported as update by the go list command is actually newer that current version
+func (m *Module) InvalidTimestamp() bool {
+	var mod Module
+	if m.Replace != nil {
+		mod = *m.Replace
+	} else {
+		mod = *m
+	}
+
+	if mod.Time != nil && mod.Update != nil {
+		return mod.Time.After(*mod.Update.Time)
+	}
+
+	return false
+}
+
+// CurrentVersion returns the current version of the module taking into consideration the any Replace settings
+func (m *Module) CurrentVersion() string {
+	var mod Module
+	if m.Replace != nil {
+		mod = *m.Replace
+
+	} else {
+		mod = *m
+	}
+
+	return mod.Version
+}
+
+// HasUpdate checks if the module has a new version
+func (m *Module) HasUpdate() bool {
+	var mod Module
+	if m.Replace != nil {
+		mod = *m.Replace
+	} else {
+		mod = *m
+	}
+
+	return mod.Update != nil
+}
+
+// New Version returns the version of the update taking into consideration the any Replace settings
+func (m *Module) NewVersion() string {
+	var mod Module
+	if m.Replace != nil {
+		mod = *m.Replace
+	} else {
+		mod = *m
+	}
+
+	if mod.Update == nil {
+		return ""
+	}
+
+	return mod.Update.Version
 }
 
 // FilterModules filters the list of modules provided by the go list command

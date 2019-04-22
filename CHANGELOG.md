@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.2.0] - 2019-04-22
 ### Added
-- Extra column 'VALID TIMESTAMP' which indicates if the timestamp of the new version is
+- Extra column 'VALID TIMESTAMPS' which indicates if the timestamp of the new version is
 actually newer that the current one 
 ### Changed
 - Packages are now internal

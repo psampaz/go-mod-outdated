@@ -105,7 +105,7 @@ alias gmodu="go list -u -m -json all | go-mod-outdated -direct -update"
 
 ## Invalid timestamps
 
-There is case where the updated version reported by the go list command is actually older than the current one.  
+There is a case where the updated version reported by the go list command is actually older than the current one.  
  
 go-mod-outdated output includes a column named **VALID TIMESTAMP** which will give an indication when this case happens,
 helping application maintainers to avoid upgrading to a version that will break their application. 

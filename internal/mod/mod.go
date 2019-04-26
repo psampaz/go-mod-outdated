@@ -66,7 +66,7 @@ func (m *Module) HasUpdate() bool {
 	return mod.Update != nil
 }
 
-// New Version returns the version of the update taking into consideration the any Replace settings
+// NewVersion returns the version of the update taking into consideration the any Replace settings
 func (m *Module) NewVersion() string {
 	var mod Module
 	if m.Replace != nil {

@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// Module holds information about a specifc module listed by go list
+// Module holds information about a specific module listed by go list
 type Module struct {
 	Path      string       `json:",omitempty"` // module path
 	Version   string       `json:",omitempty"` // module version
@@ -20,6 +20,7 @@ type Module struct {
 	GoVersion string       `json:",omitempty"` // go version used in module
 }
 
+// ModuleError represents the error when a module cannot be loaded
 type ModuleError struct {
 	Err string // error text
 }

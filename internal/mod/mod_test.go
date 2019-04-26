@@ -9,24 +9,24 @@ import (
 )
 
 var mods = []mod.Module{
-	mod.Module{
+	{
 		Path:     "github.com/pk1/pk1",
 		Main:     true,
 		Indirect: false,
 	},
-	mod.Module{
+	{
 		Path:     "github.com/pk2/pk2",
 		Main:     false,
 		Version:  "v1.0.0",
 		Indirect: false,
 	},
-	mod.Module{
+	{
 		Path:     "github.com/pk3/pk3",
 		Main:     false,
 		Version:  "v1.0.0",
 		Indirect: true,
 	},
-	mod.Module{
+	{
 		Path:     "github.com/pk4/pk4",
 		Main:     false,
 		Version:  "v1.0.0",
@@ -35,7 +35,7 @@ var mods = []mod.Module{
 			Version: "v1.1.0",
 		},
 	},
-	mod.Module{
+	{
 		Path:     "github.com/pk4/pk4",
 		Main:     false,
 		Version:  "v1.0.0",
@@ -53,19 +53,19 @@ func modTime(s string) *time.Time {
 
 func TestFilterModules(t *testing.T) {
 	want := []mod.Module{
-		mod.Module{
+		{
 			Path:     "github.com/pk2/pk2",
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: false,
 		},
-		mod.Module{
+		{
 			Path:     "github.com/pk3/pk3",
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: true,
 		},
-		mod.Module{
+		{
 			Path:     "github.com/pk4/pk4",
 			Main:     false,
 			Version:  "v1.0.0",
@@ -74,7 +74,7 @@ func TestFilterModules(t *testing.T) {
 				Version: "v1.1.0",
 			},
 		},
-		mod.Module{
+		{
 			Path:     "github.com/pk4/pk4",
 			Main:     false,
 			Version:  "v1.0.0",
@@ -92,7 +92,7 @@ func TestFilterModules(t *testing.T) {
 
 func TestFilterModulesHasUpdate(t *testing.T) {
 	want := []mod.Module{
-		mod.Module{
+		{
 			Path:     "github.com/pk4/pk4",
 			Main:     false,
 			Version:  "v1.0.0",
@@ -101,7 +101,7 @@ func TestFilterModulesHasUpdate(t *testing.T) {
 				Version: "v1.1.0",
 			},
 		},
-		mod.Module{
+		{
 			Path:     "github.com/pk4/pk4",
 			Main:     false,
 			Version:  "v1.0.0",
@@ -119,13 +119,13 @@ func TestFilterModulesHasUpdate(t *testing.T) {
 
 func TestFilterModulesIsDirect(t *testing.T) {
 	want := []mod.Module{
-		mod.Module{
+		{
 			Path:     "github.com/pk2/pk2",
 			Main:     false,
 			Version:  "v1.0.0",
 			Indirect: false,
 		},
-		mod.Module{
+		{
 			Path:     "github.com/pk4/pk4",
 			Main:     false,
 			Version:  "v1.0.0",
@@ -143,7 +143,7 @@ func TestFilterModulesIsDirect(t *testing.T) {
 
 func TestFilterModulesHasUpdateIsDirect(t *testing.T) {
 	want := []mod.Module{
-		mod.Module{
+		{
 			Path:     "github.com/pk4/pk4",
 			Main:     false,
 			Version:  "v1.0.0",

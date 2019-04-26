@@ -16,7 +16,7 @@ script:
   - go test ./... -race -coverprofile=coverage.txt -covermode=atomic
   - go install
   - mkdir hugo && cd hugo && wget https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod
-  - env GO111MODULE=on go list -u -m -json all | go-mod-outdated
+  - travis_wait env GO111MODULE=on go list -u -m -json all | go-mod-outdated
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)

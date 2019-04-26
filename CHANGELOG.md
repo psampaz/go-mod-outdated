@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.3.0] unreleased
+### Added
+- osx in travis 
+### Removed
+- tip version in travis
+
 ## [0.2.0] - 2019-04-22
 ### Added
 - Extra column 'VALID TIMESTAMPS' which indicates if the timestamp of the new version is

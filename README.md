@@ -119,6 +119,17 @@ to indicate breaking changes, but still everything relies on each module develop
 there is a fully automated way to detect breaking changes in a codebase, a good practice to avoid surpises is to write 
 tests and avoid dependencies on modules not well maintained and documented.
 
+
+## Supported Go versions
+
+- 1.11.x
+- 1.12.x
+
+## Supported operating systems
+
+- linux 
+- osx
+
 ## Real Example
 
 The following example is based on Hugo's go.mod (v0.53) (https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod)

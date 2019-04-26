@@ -112,7 +112,7 @@ helping application maintainers to avoid upgrading to a version that will break 
 
 ## Important notes
 
-- Go's module system will be finilized in Go 1.13 version. Since this tool relies on the output of Go's list related to 
+- Go's module system will be finalized in Go 1.13 version. Since this tool relies on the output of Go's list related to 
 modules, expect things to break.
 - Upgrading an application is a responsibility of the maintainer of the application. Semantic versioning provides a way
 to indicate breaking changes, but still everything relies on each module developer to apply correct version tags. Unless

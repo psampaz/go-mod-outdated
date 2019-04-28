@@ -56,7 +56,10 @@ func TestRunExitWithNonZero(t *testing.T) {
 	in := bytes.NewBuffer(inBytes)
 
 	if os.Getenv("TEST_EXITCODE") == "1" {
-		_ := runner.Run(in, &out, false, false, true)
+		err := runner.Run(in, &out, false, false, true)
+		if err != nil {
+			t.Errorf("Error should be nil, got %s", err.Error())
+		}
 		return
 	}
 	cmd := exec.Command(os.Args[0], "-test.run=TestRunExitWithNonZero")

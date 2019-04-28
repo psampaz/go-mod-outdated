@@ -49,7 +49,6 @@ func TestRunWithError(t *testing.T) {
 
 }
 
-
 func TestRunExitWithNonZero(t *testing.T) {
 	var out bytes.Buffer
 

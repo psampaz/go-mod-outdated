@@ -74,6 +74,12 @@ If you want to see only the direct depedencies that have updates run
 go list -u -m -json all | go-mod-outdated -update -direct 
 ```
 
+If you want to make your CI pipeline fail
+
+```
+go list -u -m -json all | go-mod-outdated -direct -ci
+```
+
 ### Help
   
 In order to see details about the usage of the command use the **-h** or **-help** flag
@@ -86,6 +92,8 @@ Usage of go-mod-outdated:
         List only direct modules
   -update
         List only modules with updates
+  -ci
+        Exit with non-zero exit code when outdated dependencies are found
 ```
 
 ### Shortcut

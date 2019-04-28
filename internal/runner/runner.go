@@ -11,6 +11,8 @@ import (
 	"github.com/olekukonko/tablewriter"
 )
 
+var OsExit = os.Exit
+
 // Run converts the the json output of go list -u -m -json all to table format
 func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) error {
 	var modules []mod.Module
@@ -24,7 +26,7 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) erro
 			if err == io.EOF {
 				found := renderTable(out, mod.FilterModules(modules, update, direct))
 				if found && exitWithNonZero {
-					os.Exit(1)
+					OsExit(1)
 				}
 				return nil
 			}

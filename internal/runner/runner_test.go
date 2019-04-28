@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"io/ioutil"
-	"os"
-	"os/exec"
 	"testing"
 
 	"github.com/psampaz/go-mod-outdated/internal/runner"
@@ -55,18 +53,21 @@ func TestRunExitWithNonZero(t *testing.T) {
 	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
 	in := bytes.NewBuffer(inBytes)
 
-	if os.Getenv("TEST_EXITCODE") == "1" {
-		err := runner.Run(in, &out, false, false, true)
-		if err != nil {
-			t.Errorf("Error should be nil, got %s", err.Error())
-		}
-		return
+	oldOsExit := runner.OsExit
+	defer func() { runner.OsExit = oldOsExit }()
+
+	var got int
+	testExit := func(code int) {
+		got = code
 	}
-	cmd := exec.Command(os.Args[0], "-test.run=TestRunExitWithNonZero")
-	cmd.Env = append(os.Environ(), "TEST_EXITCODE=1")
-	err := cmd.Run()
-	if e, ok := err.(*exec.ExitError); ok && !e.Success() {
-		return
+
+	runner.OsExit = testExit
+	err := runner.Run(in, &out, false, false, true)
+	if err != nil {
+		t.Errorf("Error should be nil, got %s", err.Error())
 	}
-	t.Fatalf("process ran with err %v, want exit status 1", err)
+	if exp := 1; got != exp {
+		t.Errorf("Expected exit code: %d, got: %d", exp, got)
+	}
+
 }

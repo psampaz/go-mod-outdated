@@ -56,7 +56,7 @@ func TestRunExitWithNonZero(t *testing.T) {
 	in := bytes.NewBuffer(inBytes)
 
 	if os.Getenv("TEST_EXITCODE") == "1" {
-		runner.Run(in, &out, false, false, true)
+		_ := runner.Run(in, &out, false, false, true)
 		return
 	}
 	cmd := exec.Command(os.Args[0], "-test.run=TestRunExitWithNonZero")

@@ -398,3 +398,19 @@ $ go list -u -m -json all | go-mod-outdated -update -direct
 | golang.org/x/sync                  | v0.0.0-20180314180146-1d60e4601c6f   | v0.0.0-20190412183630-56d357773e84 | true   | true             |
 +------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
 ```
+### Table view of go list -u -m -json all command using go-mod-outdated (with -ci flag, only direct dependencies with updates)
+
+```
+$ go list -u -m -json all | go-mod-outdated -update -direct -ci
++------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+|               MODULE               |               VERSION                |            NEW VERSION             | DIRECT | VALID TIMESTAMPS |
++------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+| github.com/BurntSushi/toml         | v0.0.0-20170626110600-a368813c5e64   | v0.3.1                             | true   | true             |
+| github.com/PuerkitoBio/purell      | v1.1.0                               | v1.1.1                             | true   | true             |
+| github.com/alecthomas/chroma       | v0.6.0                               | v0.6.3                             | true   | true             |
+...
+| golang.org/x/sync                  | v0.0.0-20180314180146-1d60e4601c6f   | v0.0.0-20190412183630-56d357773e84 | true   | true             |
++------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+$ echo $?
+1
+```

@@ -72,7 +72,6 @@ func TestRunExitWithNonZero(t *testing.T) {
 }
 
 func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
-	var out bytes.Buffer
 
 	inBytes, _ := ioutil.ReadFile("testdata/update_indirect.txt")
 	in := bytes.NewBuffer(inBytes)
@@ -86,6 +85,7 @@ func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
 	}
 
 	runner.OsExit = testExit
+	var out bytes.Buffer
 	err := runner.Run(in, &out, false, true, true)
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err.Error())

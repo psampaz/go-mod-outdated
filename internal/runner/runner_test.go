@@ -69,5 +69,28 @@ func TestRunExitWithNonZero(t *testing.T) {
 	if exp := 1; got != exp {
 		t.Errorf("Expected exit code: %d, got: %d", exp, got)
 	}
+}
 
+func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
+	var out bytes.Buffer
+
+	inBytes, _ := ioutil.ReadFile("testdata/update_indirect.txt")
+	in := bytes.NewBuffer(inBytes)
+
+	oldOsExit := runner.OsExit
+	defer func() { runner.OsExit = oldOsExit }()
+
+	var got int
+	testExit := func(code int) {
+		got = code
+	}
+
+	runner.OsExit = testExit
+	err := runner.Run(in, &out, false, true, true)
+	if err != nil {
+		t.Errorf("Error should be nil, got %s", err.Error())
+	}
+	if exp := 0; got != exp {
+		t.Errorf("Expected exit code: %d, got: %d", exp, got)
+	}
 }

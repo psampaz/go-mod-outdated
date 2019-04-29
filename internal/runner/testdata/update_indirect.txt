@@ -5,73 +5,14 @@
 	"GoMod": "/home/mojo/Code/go/hugo/go.mod"
 }
 {
-	"Path": "github.com/BurntSushi/locker",
-	"Version": "v0.0.0-20171006230638-a6e239ea1c69",
-	"Time": "2017-10-06T23:06:38Z",
-	"Dir": "/home/mojo/go/pkg/mod/github.com/!burnt!sushi/locker@v0.0.0-20171006230638-a6e239ea1c69",
-	"GoMod": "/home/mojo/go/pkg/mod/cache/download/github.com/!burnt!sushi/locker/@v/v0.0.0-20171006230638-a6e239ea1c69.mod"
-}
-{
-	"Path": "github.com/BurntSushi/toml",
-	"Version": "v0.0.0-20170626110600-a368813c5e64",
-	"Time": "2017-06-26T11:06:00Z",
-	"Update": {
-		"Path": "github.com/BurntSushi/toml",
-		"Version": "v0.3.1",
-		"Time": "2018-08-15T10:47:33Z"
-	},
-	"Dir": "/home/mojo/go/pkg/mod/github.com/!burnt!sushi/toml@v0.0.0-20170626110600-a368813c5e64",
-	"GoMod": "/home/mojo/go/pkg/mod/cache/download/github.com/!burnt!sushi/toml/@v/v0.0.0-20170626110600-a368813c5e64.mod"
-}
-{
-	"Path": "github.com/PuerkitoBio/purell",
-	"Version": "v1.1.0",
-	"Time": "2016-11-15T02:49:42Z",
-	"Update": {
-		"Path": "github.com/PuerkitoBio/purell",
-		"Version": "v1.1.1",
-		"Time": "2019-02-16T21:19:35Z"
-	},
-	"Dir": "/home/mojo/go/pkg/mod/github.com/!puerkito!bio/purell@v1.1.0",
-	"GoMod": "/home/mojo/go/pkg/mod/cache/download/github.com/!puerkito!bio/purell/@v/v1.1.0.mod"
-}
-{
-	"Path": "github.com/PuerkitoBio/urlesc",
-	"Version": "v0.0.0-20170810143723-de5bf2ad4578",
-	"Time": "2017-08-10T14:37:23Z",
-	"Indirect": true,
-	"Dir": "/home/mojo/go/pkg/mod/github.com/!puerkito!bio/urlesc@v0.0.0-20170810143723-de5bf2ad4578",
-	"GoMod": "/home/mojo/go/pkg/mod/cache/download/github.com/!puerkito!bio/urlesc/@v/v0.0.0-20170810143723-de5bf2ad4578.mod"
-}
-{
 	"Path": "github.com/muesli/smartcrop",
 	"Version": "v0.0.0-20180228075044-f6ebaa786a12",
 	"Time": "2018-02-28T07:50:44Z",
+	"Indirect": true,
 	"Update": {
 		"Path": "github.com/muesli/smartcrop",
 		"Version": "v0.2.0",
 		"Time": "2017-08-09T19:13:04Z"
 	},
 	"GoMod": "/home/user/go/pkg/mod/cache/download/github.com/muesli/smartcrop/@v/v0.0.0-20180228075044-f6ebaa786a12.mod"
-}
-{
-	"Path": "github.com/markbates/inflect",
-	"Version": "v1.0.0",
-	"Replace": {
-		"Path": "github.com/markbates/inflect",
-		"Version": "v0.0.0-20171215194931-a12c3aec81a6",
-		"Time": "2017-12-15T19:49:31Z",
-		"Update": {
-			"Path": "github.com/markbates/inflect",
-			"Version": "v1.0.4",
-			"Time": "2018-10-24T20:35:00Z"
-		},
-		"GoMod": "/home/mojo/go/pkg/mod/cache/download/github.com/markbates/inflect/@v/v0.0.0-20171215194931-a12c3aec81a6.mod"
-	},
-	"Update": {
-		"Path": "github.com/markbates/inflect",
-		"Version": "v1.0.4",
-		"Time": "2018-10-24T20:35:00Z"
-	},
-	"GoMod": "go.mod"
 }

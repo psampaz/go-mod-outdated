@@ -24,8 +24,9 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) erro
 
 		if err != nil {
 			if err == io.EOF {
-				found := renderTable(out, mod.FilterModules(modules, update, direct))
-				if found && exitWithNonZero {
+				filteredModules := mod.FilterModules(modules, update, direct)
+				renderTable(out, filteredModules)
+				if hasOutdated(filteredModules) && exitWithNonZero {
 					OsExit(1)
 				}
 				return nil
@@ -36,14 +37,19 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) erro
 	}
 }
 
-func renderTable(writer io.Writer, modules []mod.Module) bool {
-	var found bool
+func hasOutdated(filteredModules []mod.Module) bool {
+	for m := range filteredModules {
+		if filteredModules[m].NewVersion() != "" {
+			return true
+		}
+	}
+	return false
+}
+
+func renderTable(writer io.Writer, modules []mod.Module) {
 	table := tablewriter.NewWriter(writer)
 	table.SetHeader([]string{"Module", "Version", "New Version", "Direct", "Valid Timestamps"})
 	for k := range modules {
-		if modules[k].NewVersion() != "" {
-			found = true
-		}
 		table.Append([]string{
 			modules[k].Path,
 			modules[k].CurrentVersion(),
@@ -53,5 +59,4 @@ func renderTable(writer io.Writer, modules []mod.Module) bool {
 		})
 	}
 	table.Render()
-	return found
 }

@@ -3,10 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.3.0] unreleased
+## [0.3.0] 2019-05-01
 ### Added
-- osx in travis
 - Flag '-ci' to exit with non-zero exit code when an outdated dependency is found
+- osx in travis
 ### Removed
 - tip version in travis
 

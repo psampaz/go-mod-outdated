@@ -39,7 +39,7 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) erro
 
 func hasOutdated(filteredModules []mod.Module) bool {
 	for m := range filteredModules {
-		if filteredModules[m].NewVersion() != "" {
+		if filteredModules[m].HasUpdate() {
 			return true
 		}
 	}

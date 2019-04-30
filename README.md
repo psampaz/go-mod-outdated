@@ -74,20 +74,15 @@ If you want to see only the direct depedencies that have updates run
 go list -u -m -json all | go-mod-outdated -update -direct 
 ```
 
-If you want to make your CI pipeline fail
-
-```
-go list -u -m -json all | go-mod-outdated -direct -ci
-```
 ### CI pipelines
 
 Using the -ci flag will the make the command exit with none zero code, breaking this way your ci pipelines.
 
-If you want to make your CI pipeline fail if any direct or indirect dependency is outdated use the following:
+If you want to make your CI pipeline fail if **any direct or indirect** dependency is outdated use the following:
 ```
 go list -u -m -json all | go-mod-outdated -ci
 ```
-If you want to make your CI pipeline fail only if a direct dependency is outdated use the following:
+If you want to make your CI pipeline fail **only if a direct** dependency is outdated use the following:
 ```
 go list -u -m -json all | go-mod-outdated -direct -ci
 ```

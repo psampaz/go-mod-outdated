@@ -1,0 +1,18 @@
+{
+	"Path": "github.com/gohugoio/hugo",
+	"Main": true,
+	"Dir": "/home/mojo/Code/go/hugo",
+	"GoMod": "/home/mojo/Code/go/hugo/go.mod"
+}
+{
+	"Path": "github.com/muesli/smartcrop",
+	"Version": "v0.0.0-20180228075044-f6ebaa786a12",
+	"Time": "2018-02-28T07:50:44Z",
+	"Indirect": true,
+	"Update": {
+		"Path": "github.com/muesli/smartcrop",
+		"Version": "v0.2.0",
+		"Time": "2017-08-09T19:13:04Z"
+	},
+	"GoMod": "/home/user/go/pkg/mod/cache/download/github.com/muesli/smartcrop/@v/v0.0.0-20180228075044-f6ebaa786a12.mod"
+}

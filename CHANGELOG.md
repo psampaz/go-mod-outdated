@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [0.3.0] unreleased
 ### Added
-- osx in travis 
+- osx in travis
+- Flag '-ci' to exit with non-zero exit code when an outdated dependency is found
 ### Removed
 - tip version in travis
 

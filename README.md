@@ -74,6 +74,23 @@ If you want to see only the direct depedencies that have updates run
 go list -u -m -json all | go-mod-outdated -update -direct 
 ```
 
+If you want to make your CI pipeline fail
+
+```
+go list -u -m -json all | go-mod-outdated -direct -ci
+```
+### CI pipelines
+
+Using the -ci flag will the make the command exit with none zero code, breaking this way your ci pipelines.
+
+If you want to make your CI pipeline fail if any direct or indirect dependency is outdated use the following:
+```
+go list -u -m -json all | go-mod-outdated -ci
+```
+If you want to make your CI pipeline fail only if a direct dependency is outdated use the following:
+```
+go list -u -m -json all | go-mod-outdated -direct -ci
+```
 ### Help
   
 In order to see details about the usage of the command use the **-h** or **-help** flag
@@ -86,6 +103,8 @@ Usage of go-mod-outdated:
         List only direct modules
   -update
         List only modules with updates
+  -ci
+        Exit with non-zero exit code when outdated dependencies are found
 ```
 
 ### Shortcut
@@ -389,4 +408,20 @@ $ go list -u -m -json all | go-mod-outdated -update -direct
 | golang.org/x/image                 | v0.0.0-20180708004352-c73c2afc3b81   | v0.0.0-20190417020941-4e30a6eb7d9a | true   | true             |
 | golang.org/x/sync                  | v0.0.0-20180314180146-1d60e4601c6f   | v0.0.0-20190412183630-56d357773e84 | true   | true             |
 +------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+```
+### Table view of go list -u -m -json all command using go-mod-outdated (with -ci flag, only direct dependencies with updates)
+
+```
+$ go list -u -m -json all | go-mod-outdated -update -direct -ci
++------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+|               MODULE               |               VERSION                |            NEW VERSION             | DIRECT | VALID TIMESTAMPS |
++------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+| github.com/BurntSushi/toml         | v0.0.0-20170626110600-a368813c5e64   | v0.3.1                             | true   | true             |
+| github.com/PuerkitoBio/purell      | v1.1.0                               | v1.1.1                             | true   | true             |
+| github.com/alecthomas/chroma       | v0.6.0                               | v0.6.3                             | true   | true             |
+...
+| golang.org/x/sync                  | v0.0.0-20180314180146-1d60e4601c6f   | v0.0.0-20190412183630-56d357773e84 | true   | true             |
++------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
+$ echo $?
+1
 ```

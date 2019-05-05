@@ -1,3 +1,4 @@
+// Package main is the entry point of the go-mod-outdated tool
 package main
 
 import (

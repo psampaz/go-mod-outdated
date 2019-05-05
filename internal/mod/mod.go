@@ -1,3 +1,4 @@
+// Package mod provides functionality around modules
 package mod
 
 import (

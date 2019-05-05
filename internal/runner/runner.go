@@ -12,7 +12,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 )
 
-// OsExit is use here in order to simplicy testing
+// OsExit is use here in order to simplify testing
 var OsExit = os.Exit
 
 // Run converts the the json output of go list -u -m -json all to table format

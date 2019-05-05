@@ -57,6 +57,7 @@ issues:
     - text: "weak cryptographic primitive"
       linters:
         - gosec
+  exclude-use-default: false
 
 # golangci.com configuration
 # https://github.com/golangci/golangci/wiki/Configuration

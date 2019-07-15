@@ -38,5 +38,3 @@ jobs:
       after_success:
       - bash <(curl -s https://codecov.io/bash)
     #- stage: test
-    #  script: docker run --rm $DOCKER_USERNAME/travis-ci-build-stages-demo cat hello.txt
-    #- script: docker run --rm $DOCKER_USERNAME/travis-ci-build-stages-demo cat hello.txt

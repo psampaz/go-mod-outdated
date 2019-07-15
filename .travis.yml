@@ -1,4 +1,6 @@
 --- 
+services:
+  - docker
 go: 
   - 1.11.x
   - 1.12.x
@@ -16,6 +18,12 @@ jobs:
         - "mkdir hugo && cd hugo && wget https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod"
         - "env GO111MODULE=on go list -u -m -json all | go-mod-outdated"
       stage: "run script"
+    - 
+      script: 
+        - "docker build -t psampaz/go-mod-outdated ."
+        #- "echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin"
+        - "docker run --rm --name some-name -v $(pwd):/home/project psampaz/go-mod-outdated"
+      stage: "build docker image"
 language: go
 os: 
   - linux

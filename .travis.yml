@@ -21,7 +21,6 @@ jobs:
     - 
       script: 
         - "docker build -t psampaz/go-mod-outdated ."
-        #- "echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin"
         - "docker run --rm --name some-name -v $(pwd):/home/project psampaz/go-mod-outdated"
       stage: "build docker image"
 language: go

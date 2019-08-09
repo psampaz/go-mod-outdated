@@ -20,9 +20,11 @@ jobs:
       stage: "run script"
     - 
       script: 
-        - "docker build -t psampaz/go-mod-outdated ."
-        - "docker run --rm --name some-name -v $(pwd):/home/project psampaz/go-mod-outdated"
-      stage: "build docker image"
+        - "docker build -t psampaz/go-mod-outdated:go-1.11 -f docker/go-1.11/Dockerfile ."
+        - "docker run -v $(pwd):/tmp psampaz/go-mod-outdated:go-1.11"
+        - "docker build -t psampaz/go-mod-outdated:go-1.12 -f docker/go-1.12/Dockerfile ."
+        - "docker run -v $(pwd):/tmp psampaz/go-mod-outdated:go-1.12"
+      stage: "build docker images"
 language: go
 os: 
   - linux

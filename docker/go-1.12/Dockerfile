@@ -4,8 +4,6 @@ RUN apk add --no-cache git
 
 RUN go get -u github.com/psampaz/go-mod-outdated
 
-CMD mkdir /home/project
-
-WORKDIR /home/project
+WORKDIR /tmp
 
 CMD go list -u -m -json all | go-mod-outdated

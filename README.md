@@ -80,7 +80,7 @@ go list -u -m -json all | docker run -i psampaz/go-mod-outdated
 ```
 To use parameters just append
 ```
-go list -u -m -json all | docker run -i psampaz/go-mod-outdated -update"
+go list -u -m -json all | docker run -i psampaz/go-mod-outdated -update
 ```
 ### CI pipelines
 

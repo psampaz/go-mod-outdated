@@ -1,4 +1,3 @@
---- 
 services:
   - docker
 go: 
@@ -17,12 +16,12 @@ jobs:
         - "go install"
         - "mkdir hugo && cd hugo && wget https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod"
         - "env GO111MODULE=on go list -u -m -json all | go-mod-outdated"
-      stage: "run script"
+      stage: "testing"
     - 
       script: 
         - "docker build -t psampaz/go-mod-outdated ."
         - "go list -u -m -json all | docker run --rm -i  psampaz/go-mod-outdated"
-      stage: "build docker images"
+      stage: "docker"
 language: go
 os: 
   - linux

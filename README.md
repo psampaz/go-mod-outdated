@@ -78,7 +78,7 @@ In the folder where your go.mod lives run
 ```
 go list -u -m -json all | docker run --rm -i psampaz/go-mod-outdated
 ```
-To use parameters just append the full command to override the default one
+To use parameters just append
 ```
 go list -u -m -json all | docker run --rm -i psampaz/go-mod-outdated -update"
 ```

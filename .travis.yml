@@ -1,5 +1,9 @@
 services:
   - docker
+os:
+  - linux
+  - osx
+language: go
 go: 
   - 1.11.x
   - 1.12.x
@@ -22,7 +26,3 @@ jobs:
         - "docker build -t psampaz/go-mod-outdated ."
         - "go list -u -m -json all | docker run --rm -i  psampaz/go-mod-outdated"
       stage: "docker"
-language: go
-os: 
-  - linux
-  - osx

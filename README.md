@@ -73,7 +73,15 @@ If you want to see only the direct depedencies that have updates run
 ```
 go list -u -m -json all | go-mod-outdated -update -direct 
 ```
-
+### Docker
+In the folder where your go.mod lives run
+```
+go list -u -m -json all | docker run -i psampaz/go-mod-outdated
+```
+To use parameters just append
+```
+go list -u -m -json all | docker run -i psampaz/go-mod-outdated -update
+```
 ### CI pipelines
 
 Using the -ci flag will the make the command exit with none zero code, breaking this way your ci pipelines.

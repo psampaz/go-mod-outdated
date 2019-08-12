@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.4.0] 2019-08-12
+### Added
+- Run go-mod-outdated using Docker
+
 ## [0.3.0] 2019-05-01
 ### Added
 - Flag '-ci' to exit with non-zero exit code when an outdated dependency is found

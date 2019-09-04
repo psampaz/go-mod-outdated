@@ -3,9 +3,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [0.5.0] Unreleased
+## Unreleased
 ### Added
-- Support for Go 1.13
+- Go 1.13 in Travis
 
 ## [0.4.0] 2019-08-12
 ### Added

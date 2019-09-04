@@ -146,6 +146,7 @@ tests and avoid dependencies on modules not well maintained and documented.
 
 - 1.11.x
 - 1.12.x
+- 1.13.x
 
 ## Supported operating systems
 

@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [Unreleased] 
+### Added
+- Run tests on Go 1.13
+
+### Changed
+- Replaced Travis with Github Actions
+- Updated version of golangci-lint to 1.18
+
 ## [0.4.0] 2019-08-12
 ### Added
 - Run go-mod-outdated using Docker

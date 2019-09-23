@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/psampaz/go-mod-outdated.svg?branch=master)](https://travis-ci.com/psampaz/go-mod-outdated)
+[![Build Status](https://github.com/actions/psampaz/go-mod-outdated/workflows/.github/workflows/ci.yml/badge.svg)]
 [![codecov](https://codecov.io/gh/psampaz/go-mod-outdated/branch/master/graph/badge.svg)](https://codecov.io/gh/psampaz/go-mod-outdated)
 [![Go Report Card](https://goreportcard.com/badge/github.com/psampaz/go-mod-outdated)](https://goreportcard.com/report/github.com/psampaz/go-mod-outdated)
 [![GoDoc](https://godoc.org/github.com/psampaz/go-mod-outdated?status.svg)](https://godoc.org/github.com/psampaz/go-mod-outdated)
@@ -146,6 +146,7 @@ tests and avoid dependencies on modules not well maintained and documented.
 
 - 1.11.x
 - 1.12.x
+- 1.13.x
 
 ## Supported operating systems
 

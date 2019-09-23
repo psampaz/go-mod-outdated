@@ -26,7 +26,7 @@ func TestRun(t *testing.T) {
 	}
 
 	if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
-		t.Errorf("Wanted \n%s, got \n%s", wantOut.String(), gotOut.String())
+		t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
 	}
 
 }
@@ -42,7 +42,7 @@ func TestRunWithError(t *testing.T) {
 	wantErr := errors.New("unexpected EOF")
 
 	if gotErr.Error() != wantErr.Error() {
-		t.Errorf("Wanted %s, got %s", wantErr, gotErr)
+		t.Errorf("Wanted %q, got %q", wantErr, gotErr)
 	}
 
 }

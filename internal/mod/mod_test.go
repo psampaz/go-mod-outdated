@@ -244,7 +244,7 @@ func TestModule_CurrentVersion(t *testing.T) {
 		t.Run(test.description, func(t *testing.T) {
 			i := test.module.CurrentVersion()
 			if i != test.version {
-				t.Errorf("got %v, want %v", i, test.version)
+				t.Errorf("got %q, want %q", i, test.version)
 			}
 		})
 	}
@@ -285,7 +285,7 @@ func TestModule_NewVersion(t *testing.T) {
 		t.Run(test.description, func(t *testing.T) {
 			i := test.module.NewVersion()
 			if i != test.version {
-				t.Errorf("got %v, want %v", i, test.version)
+				t.Errorf("got %q, want %q", i, test.version)
 			}
 		})
 	}

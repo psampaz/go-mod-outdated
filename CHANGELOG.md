@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Run tests on Go 1.13
 
 ### Changed
+- Updated docker base image to 1.13.1
 - Replaced Travis with Github Actions
 - Updated version of golangci-lint to 1.18
 

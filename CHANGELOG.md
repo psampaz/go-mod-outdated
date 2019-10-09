@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [UNRELEASED] XXXX-XX-XX
+### Changed
+- Updated golangci-lint to v1.20.0
+
 ## [0.5.0] 2019-09-27 
 ### Added
 - Run tests on Go 1.13

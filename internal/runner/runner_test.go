@@ -10,7 +10,6 @@ import (
 )
 
 func TestRun(t *testing.T) {
-
 	var gotOut bytes.Buffer
 
 	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
@@ -28,11 +27,9 @@ func TestRun(t *testing.T) {
 	if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
 		t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
 	}
-
 }
 
 func TestRunWithError(t *testing.T) {
-
 	var out bytes.Buffer
 
 	inBytes, _ := ioutil.ReadFile("testdata/err.txt")
@@ -44,7 +41,6 @@ func TestRunWithError(t *testing.T) {
 	if gotErr.Error() != wantErr.Error() {
 		t.Errorf("Wanted %q, got %q", wantErr, gotErr)
 	}
-
 }
 
 func TestRunExitWithNonZero(t *testing.T) {
@@ -54,42 +50,50 @@ func TestRunExitWithNonZero(t *testing.T) {
 	in := bytes.NewBuffer(inBytes)
 
 	oldOsExit := runner.OsExit
+
 	defer func() { runner.OsExit = oldOsExit }()
 
 	var got int
+
 	testExit := func(code int) {
 		got = code
 	}
 
 	runner.OsExit = testExit
+
 	err := runner.Run(in, &out, false, false, true)
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err.Error())
 	}
+
 	if exp := 1; got != exp {
 		t.Errorf("Expected exit code: %d, got: %d", exp, got)
 	}
 }
 
 func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
-
 	inBytes, _ := ioutil.ReadFile("testdata/update_indirect.txt")
 	in := bytes.NewBuffer(inBytes)
 
 	oldOsExit := runner.OsExit
+
 	defer func() { runner.OsExit = oldOsExit }()
 
 	var got int
+
 	testExit := func(code int) {
 		got = code
 	}
 
 	runner.OsExit = testExit
+
 	var out bytes.Buffer
+
 	err := runner.Run(in, &out, false, true, true)
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err.Error())
 	}
+
 	if exp := 0; got != exp {
 		t.Errorf("Expected exit code: %d, got: %d", exp, got)
 	}

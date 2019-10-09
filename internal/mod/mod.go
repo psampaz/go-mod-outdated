@@ -47,7 +47,6 @@ func (m *Module) CurrentVersion() string {
 	var mod Module
 	if m.Replace != nil {
 		mod = *m.Replace
-
 	} else {
 		mod = *m
 	}
@@ -86,8 +85,8 @@ func (m *Module) NewVersion() string {
 // FilterModules filters the list of modules provided by the go list command
 func FilterModules(modules []Module, hasUpdate, isDirect bool) []Module {
 	out := make([]Module, 0)
-	for k := range modules {
 
+	for k := range modules {
 		if modules[k].Main {
 			continue
 		}

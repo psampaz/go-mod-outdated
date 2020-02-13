@@ -74,10 +74,10 @@ If you want to see only the direct depedencies that have updates run
 go list -u -m -json all | go-mod-outdated -update -direct 
 ```
 
-To output a markdown compatible table, pass the `-markdown` flag
+To output a markdown compatible table, pass the `-style markdown` option
 
 ```
-go list -u -m -json all | go-mod-outdated -markdown 
+go list -u -m -json all | go-mod-outdated -style markdown 
 ```
 
 ### Docker
@@ -115,8 +115,8 @@ Usage of go-mod-outdated:
         List only modules with updates
   -ci
         Non-zero exit code when at least one outdated dependency was found
-  -markdown
-        Output Markdown compatible table
+  -style string
+        Output style, pass 'markdown' for a Markdown table (default "default")
 ```
 
 ### Shortcut

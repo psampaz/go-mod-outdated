@@ -10,42 +10,38 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	var gotOut bytes.Buffer
-
-	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
-	in := bytes.NewBuffer(inBytes)
-
-	outBytes, _ := ioutil.ReadFile("testdata/out.txt")
-	wantOut := bytes.NewBuffer(outBytes)
-
-	err := runner.Run(in, &gotOut, false, false, false, false)
-
-	if err != nil {
-		t.Errorf("Error should be nil, got %s", err.Error())
+	tests := []struct {
+		name           string
+		style          string
+		expectedOutput string
+	}{
+		{name: "nil style", expectedOutput: "testdata/out.txt"},
+		{name: "default style", style: "default", expectedOutput: "testdata/out.txt"},
+		{name: "non-existent style", style: "foo", expectedOutput: "testdata/out.txt"},
+		{name: "markdown style", style: "markdown", expectedOutput: "testdata/out.md"},
 	}
 
-	if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
-		t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
-	}
-}
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+			var gotOut bytes.Buffer
 
-func TestRunMarkdown(t *testing.T) {
-	var gotOut bytes.Buffer
+			inBytes, _ := ioutil.ReadFile("testdata/in.txt")
+			in := bytes.NewBuffer(inBytes)
 
-	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
-	in := bytes.NewBuffer(inBytes)
+			outBytes, _ := ioutil.ReadFile(tt.expectedOutput)
+			wantOut := bytes.NewBuffer(outBytes)
 
-	outBytes, _ := ioutil.ReadFile("testdata/out.md")
-	wantOut := bytes.NewBuffer(outBytes)
+			err := runner.Run(in, &gotOut, false, false, false, tt.style)
 
-	err := runner.Run(in, &gotOut, false, false, false, true)
+			if err != nil {
+				t.Errorf("Error should be nil, got %s", err.Error())
+			}
 
-	if err != nil {
-		t.Errorf("Error should be nil, got %s", err.Error())
-	}
-
-	if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
-		t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
+			if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
+				t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
+			}
+		})
 	}
 }
 
@@ -55,7 +51,7 @@ func TestRunWithError(t *testing.T) {
 	inBytes, _ := ioutil.ReadFile("testdata/err.txt")
 	in := bytes.NewBuffer(inBytes)
 
-	gotErr := runner.Run(in, &out, false, false, false, false)
+	gotErr := runner.Run(in, &out, false, false, false, "default")
 	wantErr := errors.New("unexpected EOF")
 
 	if gotErr.Error() != wantErr.Error() {
@@ -81,7 +77,7 @@ func TestRunExitWithNonZero(t *testing.T) {
 
 	runner.OsExit = testExit
 
-	err := runner.Run(in, &out, false, false, true, false)
+	err := runner.Run(in, &out, false, false, true, "default")
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err.Error())
 	}
@@ -109,7 +105,7 @@ func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
 
 	var out bytes.Buffer
 
-	err := runner.Run(in, &out, false, true, true, false)
+	err := runner.Run(in, &out, false, true, true, "default")
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err.Error())
 	}

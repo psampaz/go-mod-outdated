@@ -10,35 +10,42 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	tests := []struct {
-		name     string
-		markdown bool
-		expected string
-	}{
-		{name: "ascii table", markdown: false, expected: "testdata/out.txt"},
-		{name: "markdown table", markdown: true, expected: "testdata/out.md"},
+	var gotOut bytes.Buffer
+
+	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
+	in := bytes.NewBuffer(inBytes)
+
+	outBytes, _ := ioutil.ReadFile("testdata/out.txt")
+	wantOut := bytes.NewBuffer(outBytes)
+
+	err := runner.Run(in, &gotOut, false, false, false, false)
+
+	if err != nil {
+		t.Errorf("Error should be nil, got %s", err.Error())
 	}
-	//scopelint:ignore
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			var gotOut bytes.Buffer
 
-			inBytes, _ := ioutil.ReadFile("testdata/in.txt")
-			in := bytes.NewBuffer(inBytes)
+	if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
+		t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
+	}
+}
 
-			outBytes, _ := ioutil.ReadFile(tt.expected)
-			wantOut := bytes.NewBuffer(outBytes)
+func TestRunMarkdown(t *testing.T) {
+	var gotOut bytes.Buffer
 
-			err := runner.Run(in, &gotOut, false, false, false, tt.markdown)
+	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
+	in := bytes.NewBuffer(inBytes)
 
-			if err != nil {
-				t.Errorf("Error should be nil, got %s", err.Error())
-			}
+	outBytes, _ := ioutil.ReadFile("testdata/out.md")
+	wantOut := bytes.NewBuffer(outBytes)
 
-			if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
-				t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
-			}
-		})
+	err := runner.Run(in, &gotOut, false, false, false, true)
+
+	if err != nil {
+		t.Errorf("Error should be nil, got %s", err.Error())
+	}
+
+	if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
+		t.Errorf("Wanted \n%q, got \n%q", wantOut.String(), gotOut.String())
 	}
 }
 

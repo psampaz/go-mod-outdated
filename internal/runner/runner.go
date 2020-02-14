@@ -16,7 +16,7 @@ import (
 var OsExit = os.Exit
 
 // Run converts the the json output of go list -u -m -json all to table format
-func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) error {
+func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, style string) error {
 	var modules []mod.Module
 
 	dec := json.NewDecoder(in)
@@ -28,7 +28,7 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool) erro
 		if err != nil {
 			if err == io.EOF {
 				filteredModules := mod.FilterModules(modules, update, direct)
-				renderTable(out, filteredModules)
+				renderTable(out, filteredModules, style)
 
 				if hasOutdated(filteredModules) && exitWithNonZero {
 					OsExit(1)
@@ -54,9 +54,15 @@ func hasOutdated(filteredModules []mod.Module) bool {
 	return false
 }
 
-func renderTable(writer io.Writer, modules []mod.Module) {
+func renderTable(writer io.Writer, modules []mod.Module, style string) {
 	table := tablewriter.NewWriter(writer)
 	table.SetHeader([]string{"Module", "Version", "New Version", "Direct", "Valid Timestamps"})
+
+	// Render table as markdown
+	if style == "markdown" {
+		table.SetBorders(tablewriter.Border{Left: true, Top: false, Right: true, Bottom: false})
+		table.SetCenterSeparator("|")
+	}
 
 	for k := range modules {
 		table.Append([]string{

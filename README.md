@@ -1,7 +1,7 @@
 ![Build Status](https://github.com/psampaz/go-mod-outdated/workflows/CI%20Workflow/badge.svg)
 [![codecov](https://codecov.io/gh/psampaz/go-mod-outdated/branch/master/graph/badge.svg)](https://codecov.io/gh/psampaz/go-mod-outdated)
 [![Go Report Card](https://goreportcard.com/badge/github.com/psampaz/go-mod-outdated)](https://goreportcard.com/report/github.com/psampaz/go-mod-outdated)
-[![GoDoc](https://godoc.org/github.com/psampaz/go-mod-outdated?status.svg)](https://godoc.org/github.com/psampaz/go-mod-outdated)
+[![GoDoc](https://godoc.org/github.com/psampaz/go-mod-outdated?status.svg)](https://pkg.go.dev/github.com/psampaz/go-mod-outdated)
 
 
 # go-mod-outdated

@@ -82,8 +82,8 @@ go list -u -m -json all | go-mod-outdated -style markdown
 
 **Important note for Go 1.14 users**
 
-If are using Go 1.14 with vendoring you need to pass **-mod=mod** or **-mod=readonly** to the go list command otherwise you will
-get the following error: 
+If are using Go 1.14 with vendoring you need to pass **-mod=mod** or **-mod=readonly** to the go list command otherwise 
+you will get the following error: 
 
 ```
 $ go list -u -m -json all
@@ -101,6 +101,7 @@ The following will work:
 ```
  go list -u -m -mod=readonly -json all | go-mod-outdated
 ```
+
 ### Docker
 In the folder where your go.mod lives run
 ```

@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Added tests for Go 1.14
 
 ### Changed
-- Updated docker base image to 1.14.1
+- Updated docker base image to 1.14.2
 - Reduced docker image size
 - Updated version of golangci-lint to 1.24
 

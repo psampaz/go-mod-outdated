@@ -1,4 +1,4 @@
-module github.com/bknigge/go-mod-outdated
+module github.com/psampaz/go-mod-outdated
 
 go 1.14
 

@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [0.6.1] 2020-07-22
+### Removed
+- internal directory
+
+
 ## [0.6.0] 2020-04-09
 ### Added
 - Added -style markdown option

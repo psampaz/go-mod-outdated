@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/psampaz/go-mod-outdated/internal/mod"
+	"github.com/psampaz/go-mod-outdated/mod"
 
 	"github.com/olekukonko/tablewriter"
 )

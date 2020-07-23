@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/psampaz/go-mod-outdated/internal/mod"
+	"github.com/psampaz/go-mod-outdated/mod"
 )
 
 var mods = []mod.Module{

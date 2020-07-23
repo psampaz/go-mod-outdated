@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/psampaz/go-mod-outdated/internal/runner"
+	"github.com/psampaz/go-mod-outdated/runner"
 )
 
 func TestRun(t *testing.T) {

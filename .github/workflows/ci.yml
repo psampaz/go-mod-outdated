@@ -55,7 +55,7 @@ jobs:
       - run: |        
           go install
           mkdir hugo 
-          cp internal/runner/testdata/hugo_0_53_go.mod hugo/go.mod
+          cp runner/testdata/hugo_0_53_go.mod hugo/go.mod
           cd hugo
           go list -u -m -json all | $(go env GOPATH)/bin/go-mod-outdated    
   coverage:

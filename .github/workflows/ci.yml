@@ -5,7 +5,7 @@ jobs:
   golangci:
     strategy:
       matrix:
-        go-version: [1.14.x]
+        go-version: [1.15.x]
         platform: [ubuntu-latest]
     name: golangci-lint
     runs-on: ${{ matrix.platform }}
@@ -17,11 +17,11 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
-          docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.24.0 golangci-lint run -v
+          docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.31.0 golangci-lint run -v
   docker:
     strategy:
       matrix:
-        go-version: [1.14.x]
+        go-version: [1.15.x]
         platform: [ubuntu-latest]  
     name: docker
     runs-on: ${{ matrix.platform }}
@@ -38,7 +38,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        go-version: [1.11.x, 1.12.x, 1.13.x, 1.14.x]
+        go-version: [1.13.x, 1.14.x, 1.15.x]
         platform: [ubuntu-latest, macos-latest]  
     name: tests
     runs-on: ${{ matrix.platform }}
@@ -61,7 +61,7 @@ jobs:
   coverage:
     strategy:
       matrix:
-        go-version: [1.14.x]
+        go-version: [1.15.x]
         platform: [ubuntu-latest]  
     name: coverage
     runs-on: ${{ matrix.platform }}

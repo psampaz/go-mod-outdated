@@ -10,10 +10,10 @@ jobs:
     name: golangci-lint
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
@@ -26,10 +26,10 @@ jobs:
     name: docker
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
@@ -43,10 +43,10 @@ jobs:
     name: tests
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
@@ -66,16 +66,16 @@ jobs:
     name: coverage
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v1
+      - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
           go test -v -race -cover -coverprofile=coverage.txt -covermode=atomic ./...
       - name: Upload coverage to Codecov  
-        uses: codecov/codecov-action@v1.0.5
+        uses: codecov/codecov-action@v1
         with:
           token: ${{secrets.CODECOV_TOKEN}}
           file: ./coverage.txt

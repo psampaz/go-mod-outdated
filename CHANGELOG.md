@@ -8,7 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Tests for Go 1.16
 
 ### Changed
-- Update dependencies to latest versions
+- Updated dependencies to latest versions
+- Updated version of golangci-lint to 1.37.1
 
 ### Removed
 - Tests for Go 1.13

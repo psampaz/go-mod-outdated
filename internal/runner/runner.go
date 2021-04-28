@@ -28,7 +28,9 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, styl
 		if err != nil {
 			if err == io.EOF {
 				filteredModules := mod.FilterModules(modules, update, direct)
-				renderTable(out, filteredModules, style)
+				if len(filteredModules) > 0 {
+					renderTable(out, filteredModules, style)
+				}
 
 				if hasOutdated(filteredModules) && exitWithNonZero {
 					OsExit(1)

@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"testing"
 
+	"github.com/psampaz/go-mod-outdated/internal/mod"
 	"github.com/psampaz/go-mod-outdated/internal/runner"
 )
 
@@ -112,5 +113,26 @@ func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
 
 	if exp := 0; got != exp {
 		t.Errorf("Expected exit code: %d, got: %d", exp, got)
+	}
+}
+
+func TestHTMLTable(t *testing.T) {
+	var actualOutput bytes.Buffer
+	moduleInput := []mod.Module{mod.Module{
+		Path:    "github.com/mattn/go-runewidth",
+		Version: "v0.0.10",
+		Update: &mod.Module{
+			Version: "v0.0.12",
+		},
+		Indirect: true,
+	}}
+	err := runner.RenderHTMLTable(&actualOutput, moduleInput)
+	if err != nil {
+		t.Errorf("Error should be nil, got %w", err)
+	}
+
+	const expectedOutput string = `<table><tr><th>Module</th><th>Version</th><th>New Version</th><th>Direct</th><th>Valid Timestamps</th><tr><td>github.com/mattn/go-runewidth</td><td>v0.0.10</td><td>v0.0.12</td><td>false</td><td>true</td></tr></table>`
+	if actualOutput.String() != expectedOutput {
+		t.Errorf("Expected table output to match \n%s, but got \n%s", expectedOutput, actualOutput.String())
 	}
 }

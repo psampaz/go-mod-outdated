@@ -3,6 +3,7 @@ package runner
 
 import (
 	"encoding/json"
+	"html/template"
 	"io"
 	"os"
 	"strconv"
@@ -28,7 +29,10 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, styl
 		if err != nil {
 			if err == io.EOF {
 				filteredModules := mod.FilterModules(modules, update, direct)
-				renderTable(out, filteredModules, style)
+				tableErr := renderTable(out, filteredModules, style)
+				if tableErr != nil {
+					return tableErr
+				}
 
 				if hasOutdated(filteredModules) && exitWithNonZero {
 					OsExit(1)
@@ -54,7 +58,10 @@ func hasOutdated(filteredModules []mod.Module) bool {
 	return false
 }
 
-func renderTable(writer io.Writer, modules []mod.Module, style string) {
+func renderTable(writer io.Writer, modules []mod.Module, style string) error {
+	if style == "html" {
+		return RenderHTMLTable(writer, modules)
+	}
 	table := tablewriter.NewWriter(writer)
 	table.SetHeader([]string{"Module", "Version", "New Version", "Direct", "Valid Timestamps"})
 
@@ -75,4 +82,35 @@ func renderTable(writer io.Writer, modules []mod.Module, style string) {
 	}
 
 	table.Render()
+	return nil
+}
+
+func RenderHTMLTable(writer io.Writer, modules []mod.Module) error {
+	type htmlTemplateData struct {
+		Path           string
+		CurrentVersion string
+		NewVersion     string
+		Direct         bool
+		ValidTimestamp bool
+	}
+
+	tableTemplate, err := template.New("dependencies").Parse(`<table><tr><th>Module</th><th>Version</th><th>New Version</th><th>Direct</th><th>Valid Timestamps</th>{{range .}}<tr><td>{{.Path}}</td><td>{{.CurrentVersion}}</td><td>{{.NewVersion}}</td><td>{{.Direct}}</td><td>{{.ValidTimestamp}}</td></tr>{{end}}</table>`)
+	if err != nil {
+		return err
+	}
+	data := make([]htmlTemplateData, len(modules), len(modules))
+	for i, module := range modules {
+		data[i] = htmlTemplateData{
+			Path:           module.Path,
+			CurrentVersion: module.CurrentVersion(),
+			NewVersion:     module.NewVersion(),
+			Direct:         !module.Indirect,
+			ValidTimestamp: !module.InvalidTimestamp(),
+		}
+	}
+	err = tableTemplate.Execute(writer, data)
+	if err != nil {
+		return err
+	}
+	return nil
 }

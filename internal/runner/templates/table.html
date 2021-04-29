@@ -1,0 +1,16 @@
+<table>
+    <tr>
+        <th>Module</th>
+        <th>Version</th>
+        <th>New Version</th>
+        <th>Direct</th>
+        <th>Valid Timestamps</th>
+    </tr>{{range .}}
+    <tr>
+        <td>{{.Path}}</td>
+        <td>{{.CurrentVersion}}</td>
+        <td>{{.NewVersion}}</td>
+        <td>{{.Direct}}</td>
+        <td>{{.ValidTimestamp}}</td>
+    </tr>{{end}}
+</table>

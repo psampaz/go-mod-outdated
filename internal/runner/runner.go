@@ -2,6 +2,7 @@
 package runner
 
 import (
+	_ "embed"
 	"encoding/json"
 	"html/template"
 	"io"
@@ -15,6 +16,9 @@ import (
 
 // OsExit is use here in order to simplify testing
 var OsExit = os.Exit
+
+//go:embed templates/table.html
+var tableTemplate string
 
 // Run converts the the json output of go list -u -m -json all to table format
 func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, style string) error {
@@ -94,7 +98,7 @@ func RenderHTMLTable(writer io.Writer, modules []mod.Module) error {
 		ValidTimestamp bool
 	}
 
-	tableTemplate, err := template.New("dependencies").Parse(`<table><tr><th>Module</th><th>Version</th><th>New Version</th><th>Direct</th><th>Valid Timestamps</th>{{range .}}<tr><td>{{.Path}}</td><td>{{.CurrentVersion}}</td><td>{{.NewVersion}}</td><td>{{.Direct}}</td><td>{{.ValidTimestamp}}</td></tr>{{end}}</table>`)
+	tableTemplate, err := template.New("dependencies").Parse(tableTemplate)
 	if err != nil {
 		return err
 	}

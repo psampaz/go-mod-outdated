@@ -1,11 +1,68 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+<style type="text/css">
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid #85A7C4;
+}
+thead th:nth-child(1) {
+    width: 30%;
+}
+thead th:nth-child(2) {
+    width: 20%;
+}
+thead th:nth-child(3) {
+    width: 20%;
+}
+thead th:nth-child(4) {
+    width: 15%;
+}
+thead th:nth-child(5) {
+    width: 15%;
+}
+th, td {
+    padding: 20px;
+}
+html {
+    font-family: 'helvetica neue', helvetica, arial, sans-serif;
+}
+thead th, tfoot th {
+    font-family: 'Raleway', cursive;
+}
+th {
+    letter-spacing: 2px;
+}
+td {
+    letter-spacing: 1px;
+    border-bottom: 2px solid black;
+}
+tbody td {
+    text-align: center;
+}
+tfoot td {
+    text-align: right;
+}
+tbody tr:nth-child(odd) {
+    background-color: #70D9A1;
+}
+tbody tr:nth-child(even) {
+    background-color: #70D9D6;
+}
+</style>
 <table>
+    <caption>Outdated Dependencies</caption>
+    <thead>
     <tr>
-        <th>Module</th>
-        <th>Version</th>
-        <th>New Version</th>
-        <th>Direct</th>
-        <th>Valid Timestamps</th>
-    </tr>{{range .}}
+        <th scope="col" >Module</th>
+        <th scope="col" >Version</th>
+        <th scope="col" >New Version</th>
+        <th scope="col" >Direct</th>
+        <th scope="col" >Valid Timestamps</th>
+    </tr>
+    </thead>
+    <tbody>{{range .}}
     <tr>
         <td>{{.Path}}</td>
         <td>{{.CurrentVersion}}</td>
@@ -13,4 +70,5 @@
         <td>{{.Direct}}</td>
         <td>{{.ValidTimestamp}}</td>
     </tr>{{end}}
+    </tbody>
 </table>

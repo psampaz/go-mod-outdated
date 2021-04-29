@@ -130,9 +130,10 @@ func TestHTMLTable(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error should be nil, got %w", err)
 	}
+	expectedBytes, err := ioutil.ReadFile("testdata/expected_table.html")
+	expectedOutput := bytes.NewBuffer(expectedBytes)
 
-	const expectedOutput string = `<table><tr><th>Module</th><th>Version</th><th>New Version</th><th>Direct</th><th>Valid Timestamps</th><tr><td>github.com/mattn/go-runewidth</td><td>v0.0.10</td><td>v0.0.12</td><td>false</td><td>true</td></tr></table>`
-	if actualOutput.String() != expectedOutput {
-		t.Errorf("Expected table output to match \n%s, but got \n%s", expectedOutput, actualOutput.String())
+	if actualOutput.String() != expectedOutput.String() {
+		t.Errorf("Expected table output to match \n%v, but got \n%v", expectedOutput, actualOutput.String())
 	}
 }

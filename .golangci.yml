@@ -9,6 +9,8 @@ linters-settings:
           - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
           - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
     enable-all: true
+    disable:
+      - fieldalignment
   golint:
     min-confidence: 0
   gocyclo:

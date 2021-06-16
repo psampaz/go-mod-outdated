@@ -1,6 +1,6 @@
 module github.com/psampaz/go-mod-outdated
 
-go 1.14
+go 1.16
 
 require (
 	github.com/mattn/go-runewidth v0.0.10 // indirect

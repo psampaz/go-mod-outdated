@@ -57,6 +57,7 @@ linters:
     - errorlint
     - thelper
     - wrapcheck
+    - nestif
 
 run:
   skip-dirs:

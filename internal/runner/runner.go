@@ -15,10 +15,13 @@ import (
 // OsExit is use here in order to simplify testing
 var OsExit = os.Exit
 
+// OutputStyle specifies the supported table rendering formats
 type OutputStyle string
 
 const (
-	StyleDefault  OutputStyle = "default"
+	// StyleDefault represents the default output style
+	StyleDefault OutputStyle = "default"
+	// StyleMarkdown represents the markdown formatted output style
 	StyleMarkdown OutputStyle = "markdown"
 )
 

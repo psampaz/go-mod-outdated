@@ -23,7 +23,7 @@ func main() {
 	}
 }
 
-func normalizeStyle(style string) runner.Style {
+func normalizeStyle(style string) runner.OutputStyle {
 	switch style {
 	case "markdown":
 		return runner.StyleMarkdown

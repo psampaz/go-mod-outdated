@@ -13,12 +13,12 @@ import (
 func TestRun(t *testing.T) {
 	tests := []struct {
 		name           string
-		style          runner.Style
+		style          runner.OutputStyle
 		expectedOutput string
 	}{
 		{name: "nil style", expectedOutput: "testdata/out.txt"},
 		{name: "default style", style: runner.StyleDefault, expectedOutput: "testdata/out.txt"},
-		{name: "non-existent style", style: runner.Style("foo"), expectedOutput: "testdata/out.txt"},
+		{name: "non-existent style", style: runner.OutputStyle("foo"), expectedOutput: "testdata/out.txt"},
 		{name: "markdown style", style: runner.StyleMarkdown, expectedOutput: "testdata/out.md"},
 	}
 
@@ -36,7 +36,7 @@ func TestRun(t *testing.T) {
 			err := runner.Run(in, &gotOut, false, false, false, tt.style)
 
 			if err != nil {
-				t.Errorf("Error should be nil, got %w", err)
+				t.Errorf("Error should be nil, got %s", err)
 			}
 
 			if !bytes.Equal(gotOut.Bytes(), wantOut.Bytes()) {
@@ -49,16 +49,16 @@ func TestRun(t *testing.T) {
 func TestRunNoUpdatesCase(t *testing.T) {
 	inBytes, err := ioutil.ReadFile("testdata/no_direct_updates.json")
 	if err != nil {
-		t.Errorf("Failed to read input file: %w", err)
+		t.Errorf("Failed to read input file: %s", err)
 	}
 	in := bytes.NewBuffer(inBytes)
-	var result bytes.Buffer
-	err = runner.Run(in, &result, true, true, false, runner.StyleDefault)
+	var out bytes.Buffer
+	err = runner.Run(in, &out, true, false, false, runner.StyleDefault)
 	if err != nil {
-		t.Errorf("Error should be nil, got %w", err)
+		t.Errorf("Error should be nil, got %s", err)
 	}
-	if result.Len() != 0 {
-		t.Errorf("Wanted an empty output, got \n%q", result.String())
+	if out.Len() != 0 {
+		t.Errorf("Wanted an empty output, got \n%q", out.String())
 	}
 }
 
@@ -71,7 +71,7 @@ func TestRunWithError(t *testing.T) {
 	err := runner.Run(in, &out, false, false, false, runner.StyleDefault)
 
 	if !errors.Is(err, io.ErrUnexpectedEOF) {
-		t.Errorf("Wanted an EOF error, got %w", err)
+		t.Errorf("Wanted an EOF error, got %s", err)
 	}
 }
 
@@ -95,7 +95,7 @@ func TestRunExitWithNonZero(t *testing.T) {
 
 	err := runner.Run(in, &out, false, false, true, runner.StyleDefault)
 	if err != nil {
-		t.Errorf("Error should be nil, got %w", err)
+		t.Errorf("Error should be nil, got %s", err)
 	}
 
 	if exp := 1; got != exp {
@@ -123,7 +123,7 @@ func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
 
 	err := runner.Run(in, &out, false, true, true, runner.StyleDefault)
 	if err != nil {
-		t.Errorf("Error should be nil, got %s", err.Error())
+		t.Errorf("Error should be nil, got %s", err)
 	}
 
 	if exp := 0; got != exp {

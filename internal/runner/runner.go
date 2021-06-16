@@ -15,15 +15,15 @@ import (
 // OsExit is use here in order to simplify testing
 var OsExit = os.Exit
 
-type Style string
+type OutputStyle string
 
 const (
-	StyleDefault  Style = "default"
-	StyleMarkdown Style = "markdown"
+	StyleDefault  OutputStyle = "default"
+	StyleMarkdown OutputStyle = "markdown"
 )
 
 // Run converts the the json output of go list -u -m -json all to table format
-func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, style Style) error {
+func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, style OutputStyle) error {
 	var modules []mod.Module
 
 	dec := json.NewDecoder(in)
@@ -63,7 +63,7 @@ func hasOutdated(filteredModules []mod.Module) bool {
 	return false
 }
 
-func renderTable(writer io.Writer, modules []mod.Module, style Style) {
+func renderTable(writer io.Writer, modules []mod.Module, style OutputStyle) {
 	table := tablewriter.NewWriter(writer)
 	table.SetHeader([]string{"Module", "Version", "New Version", "Direct", "Valid Timestamps"})
 

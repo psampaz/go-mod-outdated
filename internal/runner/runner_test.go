@@ -51,12 +51,16 @@ func TestRunNoUpdatesCase(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to read input file: %s", err)
 	}
+
 	in := bytes.NewBuffer(inBytes)
+
 	var out bytes.Buffer
+
 	err = runner.Run(in, &out, true, false, false, runner.StyleDefault)
 	if err != nil {
 		t.Errorf("Error should be nil, got %s", err)
 	}
+
 	if out.Len() != 0 {
 		t.Errorf("Wanted an empty output, got \n%q", out.String())
 	}

@@ -52,7 +52,6 @@ linters:
     - gofumpt
     - gci
     - goerr113
-    - nestif
     - exhaustivestruct
     - paralleltest
     - errorlint

@@ -1,83 +1,160 @@
-name: CI Workflow
-on: [pull_request]
+name: ci
+
+on:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - 'v*'
+  pull_request:
 
 jobs:
-  golangci:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - lint
+          - vendor-validate
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Validate
+        uses: docker/bake-action@v1
+        with:
+          targets: ${{ matrix.target }}
+
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
+        name: Test
+        uses: docker/bake-action@v1
+        with:
+          targets: test
+      -
+        name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          file: ./coverage.txt
+
+  e2e:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        go-version: [1.16.x]
-        platform: [ubuntu-latest]
-    name: golangci-lint
-    runs-on: ${{ matrix.platform }}
+        os:
+          - ubuntu-latest
+          - macos-latest
+        go-version:
+          - 1.14
+          - 1.15
+          - 1.16
     steps:
-      - uses: actions/checkout@v2
+      -
+        name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v2
+      -
+        name: Set up Go
+        uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - run: |
-          docker run --rm -v $(pwd):/app -w /app golangci/golangci-lint:v1.37.1 golangci-lint run -v
-  docker:
-    strategy:
-      matrix:
-        go-version: [1.16.x]
-        platform: [ubuntu-latest]  
-    name: docker
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go-version }}
-      - run: |
-          docker build -t psampaz/go-mod-outdated .
-          go list -u -m -json all | docker run --rm -i  psampaz/go-mod-outdated             
-  tests:
-    strategy:
-      matrix:
-        go-version: [1.14.x, 1.15.x, 1.16.x]
-        platform: [ubuntu-latest, macos-latest]  
-    name: tests
-    runs-on: ${{ matrix.platform }}
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go-version }}
-      - run: |
+      -
+        name: Test
+        run: |
           go get github.com/mfridman/tparse
           go test -v -race -cover -json ./... | $(go env GOPATH)/bin/tparse -all
-      - run: |        
+      -
+        name: Integration
+        run: |
           go install
-          mkdir hugo 
+          mkdir hugo
           cp internal/runner/testdata/hugo_0_53_go.mod hugo/go.mod
           cd hugo
-          go list -u -m -json all | $(go env GOPATH)/bin/go-mod-outdated    
-  coverage:
-    strategy:
-      matrix:
-        go-version: [1.16.x]
-        platform: [ubuntu-latest]  
-    name: coverage
-    runs-on: ${{ matrix.platform }}
+          go list -u -m -json all | $(go env GOPATH)/bin/go-mod-outdated
+
+  build:
+    runs-on: ubuntu-latest
+    needs:
+      - validate
+      - coverage
+    env:
+      DOCKERHUB_SLUG: psampaz/go-mod-outdated
     steps:
-      - uses: actions/checkout@v2
+      -
+        name: Checkout
+        uses: actions/checkout@v2
         with:
-          fetch-depth: 1
-      - uses: actions/setup-go@v2
+          fetch-depth: 0
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
         with:
-          go-version: ${{ matrix.go-version }}
-      - run: |
-          go test -v -race -cover -coverprofile=coverage.txt -covermode=atomic ./...
-      - name: Upload coverage to Codecov  
-        uses: codecov/codecov-action@v1
+          images: |
+            ${{ env.DOCKERHUB_SLUG }}
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=pr
+            type=edge
+          labels: |
+            org.opencontainers.image.title=go-mod-outdated
+            org.opencontainers.image.description=Find outdated dependencies of your Go projects
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
         with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: ./coverage.txt
-          flags: unittests
-          name: codecov-umbrella 
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build artifacts
+        uses: docker/bake-action@v1
+        with:
+          targets: artifact-all
+      -
+        name: Move artifacts
+        run: |
+          mv ./dist/**/* ./dist/
+      -
+        name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: go-mod-outdated
+          path: ./dist/*
+          if-no-files-found: error
+      -
+        name: Build image
+        uses: docker/bake-action@v1
+        with:
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta.outputs.bake-file }}
+          targets: image-all
+          push: ${{ github.event_name != 'pull_request' }}
+      -
+        name: GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          files: |
+            dist/*.tar.gz
+            dist/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

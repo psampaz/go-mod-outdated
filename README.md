@@ -1,14 +1,14 @@
-![Build Status](https://github.com/psampaz/go-mod-outdated/workflows/CI%20Workflow/badge.svg)
+[![Build Status](https://github.com/psampaz/go-mod-outdated/workflows/ci/badge.svg)](https://github.com/psampaz/go-mod-outdated/actions?query=workflow%3Aci)
 [![codecov](https://codecov.io/gh/psampaz/go-mod-outdated/branch/master/graph/badge.svg)](https://codecov.io/gh/psampaz/go-mod-outdated)
 [![Go Report Card](https://goreportcard.com/badge/github.com/psampaz/go-mod-outdated)](https://goreportcard.com/report/github.com/psampaz/go-mod-outdated)
 [![GoDoc](https://godoc.org/github.com/psampaz/go-mod-outdated?status.svg)](https://pkg.go.dev/github.com/psampaz/go-mod-outdated)
-
+[![Docker Pulls](https://img.shields.io/docker/pulls/psampaz/go-mod-outdated.svg?logo=docker)](https://hub.docker.com/r/psampaz/go-mod-outdated/)
 
 # go-mod-outdated
 
 An easy way to find outdated dependencies of your Go projects.
 
-go-mod-outdated provides a table view of the **go list -u -m -json all** command which lists all dependencies of a Go project and their available minor and patch updates. It also provides a way to filter indirect dependencies and dependencies without updates.
+go-mod-outdated provides a table view of the `go list -u -m -json all` command which lists all dependencies of a Go project and their available minor and patch updates. It also provides a way to filter indirect dependencies and dependencies without updates.
 
 In short it turns this:
 
@@ -42,24 +42,39 @@ into this
 | github.com/BurntSushi/toml                | v0.0.0-20170626110600-a368813c5e64   | v0.3.1                             | true   | true             |
 +-------------------------------------------+--------------------------------------+------------------------------------+--------+--------+---------+
 ```
+
+___
+
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Docker](#docker)
+  * [CI pipelines](#ci-pipelines)
+  * [Help](#help)
+  * [Shortcut](#shortcut)
+* [Invalid timestamps](#invalid-timestamps)
+* [Important note](#important-note)
+* [Build](#build)
+* [Real example](#real-example)
+
 ## Installation
 
-```
+```shell
 go get -u github.com/psampaz/go-mod-outdated
 ```
 
 or 
 
-```go
+```shell
 go install github.com/psampaz/go-mod-outdated@v0.8.0
 ```
 
 if you are on go 1.16
 
 ## Usage
+
 In the folder where your go.mod lives run
  
-```
+```shell
 go list -u -m -json all | go-mod-outdated
 ```
 
@@ -67,25 +82,25 @@ to see all modules in table view.
 
 If you want to see only the modules with updates run 
 
-```
+```shell
 go list -u -m -json all | go-mod-outdated -update
 ```
 
 If you want to see only the direct depedencies run
 
-```
+```shell
 go list -u -m -json all | go-mod-outdated -direct
 ```
 
 If you want to see only the direct depedencies that have updates run
 
-```
+```shell
 go list -u -m -json all | go-mod-outdated -update -direct 
 ```
 
 To output a markdown compatible table, pass the `-style markdown` option
 
-```
+```shell
 go list -u -m -json all | go-mod-outdated -style markdown 
 ```
 
@@ -96,42 +111,51 @@ you will get the following error:
 
 ```
 $ go list -u -m -json all
- 
+
 go list -m: can't determine available upgrades using the vendor directory
         (Use -mod=mod or -mod=readonly to bypass.)
 ```
 
 The following will work:
 
-```
- go list -u -m -mod=mod -json all | go-mod-outdated
+```shell
+go list -u -m -mod=mod -json all | go-mod-outdated
 ```
 
-```
- go list -u -m -mod=readonly -json all | go-mod-outdated
+```shell
+go list -u -m -mod=readonly -json all | go-mod-outdated
 ```
 
 ### Docker
-In the folder where your go.mod lives run
-```
+
+In the folder where your `go.mod` lives run
+
+```shell
 go list -u -m -json all | docker run -i psampaz/go-mod-outdated
 ```
+
 To use parameters just append
-```
+
+```shell
 go list -u -m -json all | docker run -i psampaz/go-mod-outdated -update
 ```
+
 ### CI pipelines
 
 Using the -ci flag will the make the command exit with none zero code, breaking this way your ci pipelines.
 
 If you want to make your CI pipeline fail if **any direct or indirect** dependency is outdated use the following:
-```
+
+```shell
 go list -u -m -json all | go-mod-outdated -ci
 ```
+
 If you want to make your CI pipeline fail **only if a direct** dependency is outdated use the following:
-```
+
+```shell
 go list -u -m -json all | go-mod-outdated -direct -ci
 ```
+
 ### Help
   
 In order to see details about the usage of the command use the **-h** or **-help** flag
@@ -152,10 +176,10 @@ Usage of go-mod-outdated:
 
 ### Shortcut
 
-If **go list -u -m -json all | go-mod-outdated -update -direct** seems too difficult to use or remember you can create 
+If `go list -u -m -json all | go-mod-outdated -update -direct` seems too difficult to use or remember you can create 
 a shortcut using an alias. In linux try one of the following: 
 
-```
+```shell
 alias gmo="go list -u -m -json all | go-mod-outdated"
 
 alias gmod="go list -u -m -json all | go-mod-outdated -direct"
@@ -179,23 +203,33 @@ to indicate breaking changes, but still everything relies on each module develop
 there is a fully automated way to detect breaking changes in a codebase, a good practice to avoid surpises is to write 
 tests and avoid dependencies on modules not well maintained and documented.
 
+## Build
 
-## Supported Go versions
+```shell
+git clone https://github.com/psampaz/go-mod-outdated.git
+cd go-mod-outdated
 
-- 1.13.x
-- 1.14.x
-- 1.15.x
+# validate (golangci-lint, vendor)
+docker buildx bake validate
 
-## Supported operating systems
+# test with coverage
+docker buildx bake test
 
-- linux 
-- osx
+# build docker image and output to docker with psampaz/go-mod-outdated:local tag (default)
+docker buildx bake
+
+# build multi-platform image
+docker buildx bake image-all
+
+# create artifacts in ./dist
+docker buildx bake artifact-all
+```
 
 ## Real Example
 
 The following example is based on Hugo's go.mod (v0.53) (https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod)
 
-### Json output of go list -u -m json all command    
+### Json output of `go list -u -m json all` command    
 
 ```
 $ go list -u -m -json all
@@ -284,7 +318,8 @@ $ go list -u -m -json all
 }
 ```
 
-### Table view of go list -u -m -json all command using go-mod-outdated
+### Table view of `go list -u -m -json all` command using go-mod-outdated
+
 ```
 $ go list -u -m -json all | go-mod-outdated
 +-------------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
@@ -375,7 +410,7 @@ $ go list -u -m -json all | go-mod-outdated
 +-------------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
 ```
 
-### Table view of go list -u -m -json all command using go-mod-outdated (only dependencies with updates)
+### Table view of `go list -u -m -json all` command using go-mod-outdated (only dependencies with updates)
 
 ```
 $ go list -u -m -json all | go-mod-outdated -update
@@ -421,7 +456,8 @@ $ go list -u -m -json all | go-mod-outdated -update
 | golang.org/x/sys                          | v0.0.0-20181206074257-70b957f3b65e   | v0.0.0-20190419153524-e8e3143a4f4a | false  | true             |
 +-------------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
 ```
-### Table view of go list -u -m -json all command using go-mod-outdated (only direct dependencies with updates)
+
+### Table view of `go list -u -m -json all` command using go-mod-outdated (only direct dependencies with updates)
 
 ```
 $ go list -u -m -json all | go-mod-outdated -update -direct
@@ -451,7 +487,8 @@ $ go list -u -m -json all | go-mod-outdated -update -direct
 | golang.org/x/sync                  | v0.0.0-20180314180146-1d60e4601c6f   | v0.0.0-20190412183630-56d357773e84 | true   | true             |
 +------------------------------------+--------------------------------------+------------------------------------+--------+------------------+
 ```
-### Table view of go list -u -m -json all command using go-mod-outdated (with -ci flag, only direct dependencies with updates)
+
+### Table view of `go list -u -m -json all` command using go-mod-outdated (with -ci flag, only direct dependencies with updates)
 
 ```
 $ go list -u -m -json all | go-mod-outdated -update -direct -ci

@@ -27,6 +27,8 @@ func normalizeStyle(style string) runner.OutputStyle {
 	switch style {
 	case "markdown":
 		return runner.StyleMarkdown
+	case "json":
+		return runner.StyleJSON
 	default:
 		return runner.StyleDefault
 	}

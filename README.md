@@ -48,7 +48,7 @@ into this
 go get -u github.com/psampaz/go-mod-outdated
 ```
 
-or 
+or
 
 ```go
 go install github.com/psampaz/go-mod-outdated@v0.8.0
@@ -58,14 +58,14 @@ if you are on go 1.16
 
 ## Usage
 In the folder where your go.mod lives run
- 
+
 ```
 go list -u -m -json all | go-mod-outdated
 ```
 
 to see all modules in table view.
 
-If you want to see only the modules with updates run 
+If you want to see only the modules with updates run
 
 ```
 go list -u -m -json all | go-mod-outdated -update
@@ -80,23 +80,30 @@ go list -u -m -json all | go-mod-outdated -direct
 If you want to see only the direct depedencies that have updates run
 
 ```
-go list -u -m -json all | go-mod-outdated -update -direct 
+go list -u -m -json all | go-mod-outdated -update -direct
 ```
 
 To output a markdown compatible table, pass the `-style markdown` option
 
 ```
-go list -u -m -json all | go-mod-outdated -style markdown 
+go list -u -m -json all | go-mod-outdated -style markdown
+```
+
+If you need to postprocess the filtered list of modules and updates, you can use `-style json`
+to output the same JSON structure as `go list` produced.
+
+```
+go list -u -m -json all | go-mod-outdated -style json
 ```
 
 **Important note for Go 1.14 users**
 
-If are using Go 1.14 with vendoring you need to pass **-mod=mod** or **-mod=readonly** to the go list command otherwise 
-you will get the following error: 
+If are using Go 1.14 with vendoring you need to pass **-mod=mod** or **-mod=readonly** to the go list command otherwise
+you will get the following error:
 
 ```
 $ go list -u -m -json all
- 
+
 go list -m: can't determine available upgrades using the vendor directory
         (Use -mod=mod or -mod=readonly to bypass.)
 ```
@@ -133,7 +140,7 @@ If you want to make your CI pipeline fail **only if a direct** dependency is out
 go list -u -m -json all | go-mod-outdated -direct -ci
 ```
 ### Help
-  
+
 In order to see details about the usage of the command use the **-h** or **-help** flag
 
 ```
@@ -152,8 +159,8 @@ Usage of go-mod-outdated:
 
 ### Shortcut
 
-If **go list -u -m -json all | go-mod-outdated -update -direct** seems too difficult to use or remember you can create 
-a shortcut using an alias. In linux try one of the following: 
+If **go list -u -m -json all | go-mod-outdated -update -direct** seems too difficult to use or remember you can create
+a shortcut using an alias. In linux try one of the following:
 
 ```
 alias gmo="go list -u -m -json all | go-mod-outdated"
@@ -163,20 +170,20 @@ alias gmod="go list -u -m -json all | go-mod-outdated -direct"
 alias gmou="go list -u -m -json all | go-mod-outdated -update"
 
 alias gmodu="go list -u -m -json all | go-mod-outdated -direct -update"
-```  
+```
 
 ## Invalid timestamps
 
-There is a case where the updated version reported by the go list command is actually older than the current one.  
- 
+There is a case where the updated version reported by the go list command is actually older than the current one.
+
 go-mod-outdated output includes a column named **VALID TIMESTAMP** which will give an indication when this case happens,
-helping application maintainers to avoid upgrading to a version that will break their application. 
+helping application maintainers to avoid upgrading to a version that will break their application.
 
 ## Important note
 
 - Upgrading an application is a responsibility of the maintainer of the application. Semantic versioning provides a way
 to indicate breaking changes, but still everything relies on each module developer to apply correct version tags. Unless
-there is a fully automated way to detect breaking changes in a codebase, a good practice to avoid surpises is to write 
+there is a fully automated way to detect breaking changes in a codebase, a good practice to avoid surpises is to write
 tests and avoid dependencies on modules not well maintained and documented.
 
 
@@ -188,14 +195,14 @@ tests and avoid dependencies on modules not well maintained and documented.
 
 ## Supported operating systems
 
-- linux 
+- linux
 - osx
 
 ## Real Example
 
 The following example is based on Hugo's go.mod (v0.53) (https://raw.githubusercontent.com/gohugoio/hugo/v0.53/go.mod)
 
-### Json output of go list -u -m json all command    
+### Json output of go list -u -m json all command
 
 ```
 $ go list -u -m -json all

@@ -41,7 +41,9 @@ func Run(in io.Reader, out io.Writer, update, direct, exitWithNonZero bool, styl
 			if err == io.EOF {
 				filteredModules := mod.FilterModules(modules, update, direct)
 				if len(filteredModules) > 0 {
-					renderOutput(out, filteredModules, style)
+					if err := renderOutput(out, filteredModules, style); err != nil {
+						return err
+					}
 				}
 
 				if hasOutdated(filteredModules) && exitWithNonZero {
@@ -68,15 +70,15 @@ func hasOutdated(filteredModules []mod.Module) bool {
 	return false
 }
 
-func renderOutput(writer io.Writer, modules []mod.Module, style OutputStyle) {
+func renderOutput(writer io.Writer, modules []mod.Module, style OutputStyle) error {
 	if style == StyleJSON {
-		renderJSON(writer, modules)
+		return renderJSON(writer, modules)
 	} else {
-		renderTable(writer, modules, style)
+		return renderTable(writer, modules, style)
 	}
 }
 
-func renderTable(writer io.Writer, modules []mod.Module, style OutputStyle) {
+func renderTable(writer io.Writer, modules []mod.Module, style OutputStyle) error {
 	table := tablewriter.NewWriter(writer)
 	table.SetHeader([]string{"Module", "Version", "New Version", "Direct", "Valid Timestamps"})
 
@@ -97,11 +99,13 @@ func renderTable(writer io.Writer, modules []mod.Module, style OutputStyle) {
 	}
 
 	table.Render()
+
+	return nil
 }
 
-func renderJSON(writer io.Writer, modules []mod.Module) {
+func renderJSON(writer io.Writer, modules []mod.Module) error {
 	encoder := json.NewEncoder(writer)
 	encoder.SetIndent("", "  ")
 
-	encoder.Encode(modules)
+	return encoder.Encode(modules)
 }

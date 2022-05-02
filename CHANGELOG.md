@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [ΝΕΧΤ]  ΧΧΧΧ-ΧΧ-ΧΧ
 ### Added
+- Add `json` output style to produce the same JSON structure that was read from stdin, allowing `go-mod-outdated`
+  to be used as a shell filter ([#56](https://github.com/psampaz/go-mod-outdated/pull/56))
 
 ### Changed
 - Skip rendering the table if there are no updates to display https://github.com/psampaz/go-mod-outdated/pull/46
@@ -44,7 +46,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Reduced docker image size
 - Updated version of golangci-lint to 1.24
 
-## [0.5.0] 2019-09-27 
+## [0.5.0] 2019-09-27
 ### Added
 - Run tests on Go 1.13
 
@@ -68,7 +70,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [0.2.0] - 2019-04-22
 ### Added
 - Extra column 'VALID TIMESTAMPS' which indicates if the timestamp of the new version is
-actually newer that the current one 
+actually newer that the current one
 
 ### Changed
 - Packages are now internal

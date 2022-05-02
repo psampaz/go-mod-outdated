@@ -20,6 +20,7 @@ func TestRun(t *testing.T) {
 		{name: "default style", style: runner.StyleDefault, expectedOutput: "testdata/out.txt"},
 		{name: "non-existent style", style: runner.OutputStyle("foo"), expectedOutput: "testdata/out.txt"},
 		{name: "markdown style", style: runner.StyleMarkdown, expectedOutput: "testdata/out.md"},
+		{name: "JSON style", style: runner.StyleJSON, expectedOutput: "testdata/out.json"},
 	}
 
 	for _, tt := range tests {

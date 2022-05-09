@@ -47,9 +47,8 @@ into this
  
 You are welcome to contribute bug fixes or improvements.
 
-In case of a bug fix please submit a PR directly.
-
-In case of a new feature/improvement but please **open an issue first**, describing in detail the desired change. I would like to keep this tool as simple as possible so that it is easy to use and easy to maintain. My time is limited and I want to respect your time also.
+- In case of a bug fix please submit a PR directly.
+- In case of a new feature/improvement please **open an issue first**, describing in detail the desired change. I would like to keep this tool as simple as possible so that it is easy to use and easy to maintain. My time is limited and I want to respect your time also.
 
 ## Installation
 

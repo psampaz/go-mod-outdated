@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"io"
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/psampaz/go-mod-outdated/internal/runner"
@@ -27,10 +27,10 @@ func TestRun(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			var gotOut bytes.Buffer
 
-			inBytes, _ := ioutil.ReadFile("testdata/in.txt")
+			inBytes, _ := os.ReadFile("testdata/in.txt")
 			in := bytes.NewBuffer(inBytes)
 
-			outBytes, _ := ioutil.ReadFile(tt.expectedOutput)
+			outBytes, _ := os.ReadFile(tt.expectedOutput)
 			wantOut := bytes.NewBuffer(outBytes)
 
 			err := runner.Run(in, &gotOut, false, false, false, tt.style)
@@ -47,7 +47,7 @@ func TestRun(t *testing.T) {
 }
 
 func TestRunNoUpdatesCase(t *testing.T) {
-	inBytes, err := ioutil.ReadFile("testdata/no_direct_updates.json")
+	inBytes, err := os.ReadFile("testdata/no_direct_updates.json")
 	if err != nil {
 		t.Errorf("Failed to read input file: %s", err)
 	}
@@ -69,7 +69,7 @@ func TestRunNoUpdatesCase(t *testing.T) {
 func TestRunWithError(t *testing.T) {
 	var out bytes.Buffer
 
-	inBytes, _ := ioutil.ReadFile("testdata/err.txt")
+	inBytes, _ := os.ReadFile("testdata/err.txt")
 	in := bytes.NewBuffer(inBytes)
 
 	err := runner.Run(in, &out, false, false, false, runner.StyleDefault)
@@ -82,7 +82,7 @@ func TestRunWithError(t *testing.T) {
 func TestRunExitWithNonZero(t *testing.T) {
 	var out bytes.Buffer
 
-	inBytes, _ := ioutil.ReadFile("testdata/in.txt")
+	inBytes, _ := os.ReadFile("testdata/in.txt")
 	in := bytes.NewBuffer(inBytes)
 
 	oldOsExit := runner.OsExit
@@ -108,7 +108,7 @@ func TestRunExitWithNonZero(t *testing.T) {
 }
 
 func TestRunExitWithNonZeroIndirectsOnly(t *testing.T) {
-	inBytes, _ := ioutil.ReadFile("testdata/update_indirect.txt")
+	inBytes, _ := os.ReadFile("testdata/update_indirect.txt")
 	in := bytes.NewBuffer(inBytes)
 
 	oldOsExit := runner.OsExit

@@ -52,17 +52,9 @@ You are welcome to contribute bug fixes or improvements.
 
 ## Installation
 
-```
-go get -u github.com/psampaz/go-mod-outdated
-```
-
-or 
-
 ```go
-go install github.com/psampaz/go-mod-outdated@v0.8.0
+go install github.com/psampaz/go-mod-outdated@latest
 ```
-
-if you are on go 1.16
 
 ## Usage
 In the folder where your go.mod lives run

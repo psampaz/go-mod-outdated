@@ -29,6 +29,7 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
+          go build -o go-mod-outdated main.go
           docker build -t psampaz/go-mod-outdated .
           go list -u -m -json all | docker run --rm -i  psampaz/go-mod-outdated
   tests:

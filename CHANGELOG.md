@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [ΝΕΧΤ]  ΧΧΧΧ-ΧΧ-ΧΧ
 ### Added
-
+- Goreleaser
 ### Changed
 - Skip rendering the table if there are no updates to display https://github.com/psampaz/go-mod-outdated/pull/46
 

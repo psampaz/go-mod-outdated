@@ -188,13 +188,12 @@ there is a fully automated way to detect breaking changes in a codebase, a good 
 tests and avoid dependencies on modules not well maintained and documented.
 
 
-## Supported Go versions
+## Supported (tested) Go versions
 
-- 1.13.x
-- 1.14.x
-- 1.15.x
+- 1.19.x
+- 1.20.x
 
-## Supported operating systems
+## Supported (tested) operating systems
 
 - linux 
 - osx

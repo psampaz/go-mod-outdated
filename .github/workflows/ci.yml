@@ -9,44 +9,45 @@ jobs:
     name: golangci-lint
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
+        uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.37.1
+          version: v1.50.1
   docker:
     strategy:
       matrix:
-        go-version: [1.17.x]
+        go-version: [1.20.x]
         platform: [ubuntu-latest]
     name: docker
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
+          go build -o go-mod-outdated main.go
           docker build -t psampaz/go-mod-outdated .
           go list -u -m -json all | docker run --rm -i  psampaz/go-mod-outdated
   tests:
     strategy:
       matrix:
-        go-version: [1.16.x, 1.17.x]
+        go-version: [1.19.x, 1.20.x]
         platform: [ubuntu-latest, macos-latest]
     name: tests
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
-          go get github.com/mfridman/tparse
+          go install github.com/mfridman/tparse@latest
           go test -v -race -cover -json ./... | $(go env GOPATH)/bin/tparse -all
       - run: |
           go install
@@ -57,15 +58,15 @@ jobs:
   coverage:
     strategy:
       matrix:
-        go-version: [1.17.x]
+        go-version: [1.20.x]
         platform: [ubuntu-latest]
     name: coverage
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go-version }}
       - run: |
